@@ -1,0 +1,975 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: AccuMed OpenAPI
+  contact:
+    email: info@accumedintel.com
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/dennisfoster/AccuMed-OpenAPI/1.0.0
+tags:
+  - name: Packages
+  - name: Requests
+  - name: Organizations
+  - name: Users
+  - name: Patients
+paths:
+  /packages:
+    get:
+      tags:
+      - Packages
+      summary: Get all packages
+      operationId: getPackages
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+    post:
+      tags:
+      - Packages
+      summary: Create new package
+      operationId: postPackages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Package'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+  /packages/defaults:
+    get:
+      tags:
+      - Packages
+      summary: Get default package
+      operationId: getDefaultPackage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'
+  /packages/search:
+    get:
+      tags:
+      - Packages
+      summary: Search packages
+      operationId: searchPackages
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'   
+  /packages/{guid}:
+    get:
+      tags:
+      - Packages
+      summary: Get package by GUID
+      operationId: getPackageByGUID
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of package
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'
+    delete:
+      tags:
+      - Packages
+      summary: Delete package by GUID
+      operationId: deletePackageByGUID
+      parameters: 
+      - name: guid
+        in: path
+        description: GUID of package
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content: {}
+  /packages/{guid}/{key}/{value}:
+    patch:
+      tags:
+      - Packages
+      summary: Update package
+      operationId: updatePackage
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of package
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: Property name
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: path
+        description: Property value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'  
+        '405':
+          description: Invalid input
+          content: {}   
+  /requests:
+    get:
+      tags:
+      - Requests
+      summary: Get all requests
+      operationId: getRequests
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Request'     
+    post:
+      tags:
+      - Requests
+      summary: Create new request
+      operationId: postRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}         
+  /requests/search:
+    get:
+      tags:
+      - Requests
+      summary: Search requests
+      operationId: searchRequests
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Request'   
+  /requests/{guid}:
+    get:
+      tags:
+      - Requests
+      summary: Get request by GUID
+      operationId: getRequestByGUID
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of request
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+  /requests/defaults:
+    get:
+      tags:
+      - Requests
+      summary: Get default request
+      operationId: getDefaultRequest
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+  /requests/{guid}/{key}/{value}:
+    patch:
+      tags:
+      - Requests
+      summary: Update request
+      operationId: updateRequest
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of request
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: Property name
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: path
+        description: Property value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'  
+        '405':
+          description: Invalid input
+          content: {}      
+  /organizations:
+    get:
+      tags:
+      - Organizations
+      summary: Get all organizations
+      operationId: getOrganizations
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+    post:
+      tags:
+      - Organizations
+      summary: Create new organization
+      operationId: postOrganizations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+  /organizations/defaults:
+    get:
+      tags:
+      - Organizations
+      summary: Get default organization
+      operationId: getDefaultOrganization
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+  /organizations/search:
+    get:
+      tags:
+      - Organizations
+      summary: Search organizations
+      operationId: searchOrganizations
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'   
+  /organizations/{guid}:
+    get:
+      tags:
+      - Organizations
+      summary: Get organization by GUID
+      operationId: getOrganizationByGUID
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of organization
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+    delete:
+      tags:
+      - Organizations
+      summary: Delete organization by GUID
+      operationId: deleteOrganizationByGUID
+      parameters: 
+      - name: guid
+        in: path
+        description: GUID of organization
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content: {}
+  /organizations/{guid}/{key}/{value}:
+    patch:
+      tags:
+      - Organizations
+      summary: Update organization
+      operationId: updateOrganization
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of organization
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: Property name
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: path
+        description: Property value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'  
+        '405':
+          description: Invalid input
+          content: {}       
+  /users:
+    get:
+      tags:
+      - Users
+      summary: Get all users
+      operationId: getUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - Users
+      summary: Create new user
+      operationId: postUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+  /users/defaults:
+    get:
+      tags:
+      - Users
+      summary: Get default user
+      operationId: getDefaultUser
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/search:
+    get:
+      tags:
+      - Users
+      summary: Search Users
+      operationId: searchUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'   
+  /users/{guid}:
+    get:
+      tags:
+      - Users
+      summary: Get user by GUID
+      operationId: getUserByGUID
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of user
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+      - Users
+      summary: Delete user by GUID
+      operationId: deleteUserByGUID
+      parameters: 
+      - name: guid
+        in: path
+        description: GUID of user
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content: {}
+  /users/{guid}/{key}/{value}:
+    patch:
+      tags:
+      - Users
+      summary: Update user
+      operationId: updateUser
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of user
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: Property name
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: path
+        description: Property value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'  
+        '405':
+          description: Invalid input
+          content: {}          
+  /patients:
+    get:
+      tags:
+      - Patients
+      summary: Get all patients
+      operationId: getPatients
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+    post:
+      tags:
+      - Patients
+      summary: Create new patient
+      operationId: postPatients
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+  /patients/defaults:
+    get:
+      tags:
+      - Patients
+      summary: Get default patient
+      operationId: getDefaultPatient
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+  /patients/search:
+    get:
+      tags:
+      - Patients
+      summary: Search Patients
+      operationId: searchPatients
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'   
+  /patients/{guid}:
+    get:
+      tags:
+      - Patients
+      summary: Get patient by GUID
+      operationId: getPatientByGUID
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of patient
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+    delete:
+      tags:
+      - Patients
+      summary: Delete patient by GUID
+      operationId: deletePatientByGUID
+      parameters: 
+      - name: guid
+        in: path
+        description: GUID of patient
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content: {}
+  /patients/{guid}/{key}/{value}:
+    patch:
+      tags:
+      - Patients
+      summary: Update patient
+      operationId: updatePatient
+      parameters:
+      - name: guid
+        in: path
+        description: GUID of patient
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        description: Property name
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: path
+        description: Property value
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'  
+        '405':
+          description: Invalid input
+          content: {}            
+components:
+  schemas:
+    Package:
+      type: object
+      properties:
+        packageID:
+          type: integer
+        parentPackageID:
+          type: integer
+        packageTypeID:
+          type: integer
+        bodyPartID:
+          type: integer
+        bodyPartSlug:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        totalNationalValue:
+          type: integer
+        employeeID:
+          type: integer
+        isPublished:
+          type: integer
+        isStackable:
+          type: integer
+        isWorkersCompensation:
+          type: integer
+        isPersonalInjury:
+          type: integer
+        isFlaggedForReview:
+          type: integer
+        isExpress:
+          type: integer
+        isDeleted:
+          type: integer
+        _created:
+          type: string
+        _updated:
+          type: string
+    Request:
+      type: object
+      properties:
+        requestID:
+          type: integer
+        requestGUID:
+          type: integer
+        discloseExpert:
+          type: boolean
+        customHeader:
+          type: string
+        notes:
+          type: string
+        dueDate:
+          type: string
+        promoCode:
+          type: string
+        created:
+          type: string
+        lastUpdated:
+          type: string
+        isDownloaded:
+          type: integer
+        _embedded:
+          type: object
+          properties:
+            Type:
+              $ref: '#/components/schemas/TypeRequest'
+            Status:
+              $ref: '#/components/schemas/Status'
+            Report:
+              $ref: '#/components/schemas/Report'
+            Organization:
+              $ref: '#/components/schemas/Organization'
+            User:
+              $ref: '#/components/schemas/User'
+            Claim:
+              $ref: '#/components/schemas/Claim'
+            Attorney:
+              $ref: '#/components/schemas/Attorney'
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            Patient:
+              $ref: '#/components/schemas/Patient'
+            Package:
+              type: array
+              items:
+                $ref: '#/components/schemas/RequestPackage'
+            Bill:
+              type: array
+              items:
+                $ref: '#/components/schemas/Bill'
+            Pharmaceutical:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pharmaceutical'
+            Attachment:
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+    TypeRequest:
+      type: object
+      properties:
+        index:
+          type: string
+        value:
+          type: string
+    TypeClaim:
+      type: object
+      properties:
+        index:
+          type: string
+        value:
+          type: string          
+    Status:
+      type: object
+      properties:
+        index:
+          type: string
+        value:
+          type: string
+    Report:
+      type: object
+      properties:
+        index:
+          type: string
+        value:
+          type: string
+    Organization:
+      type: object
+      properties:
+        organizationGUID:
+          type: string
+        name:
+          type: string
+        fullAddress:
+          type: string
+        address:
+          type: string
+        subPremises:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+    User:
+      type: object
+      properties:
+        userGUID:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        directLine:
+          type: string
+        directExtension:
+          type: string
+        cellphone:
+          type: string
+        other:
+          type: string
+    Claim:
+      type: object
+      properties:
+        reference:
+          type: string
+        caseNumber:
+          type: string
+        dateOfLoss:
+          type: string
+        dateOfDiscovery:
+          type: string
+        dateOfTrial:
+          type: string
+        _embedded:
+          type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/TypeClaim'
+    Attorney:
+      type: array
+      items:
+        type: string
+    Contact:
+      type: object
+      properties:
+        contactID:
+          type: string
+        contactGUID:
+          type: string
+        name:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        directLine:
+          type: string
+        directExtension:
+          type: string
+        cellphone:
+          type: string
+        fax:
+          type: string
+    Patient:
+      type: object
+      properties:
+        patientGUID:
+          type: string
+        name:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        sex:
+          type: string
+        fullAddress:
+          type: string
+        address:
+          type: string
+        subPremises:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        dateOfBirth:
+          type: string
+    RequestPackage:
+      type: object
+      properties:
+        packageID:
+          type: integer
+        packageGUID:
+          type: string
+        link:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: number
+        frequencyMultiplier:
+          type: number
+        frequency:
+          type: integer
+        duration:
+          type: number
+        period:
+          type: number
+        multiplier:
+          type: number
+        multiplierText:
+          type: string
+    Bill:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: integer
+        packageID:
+          type: integer
+        linkToPackage:
+          type: integer
+        isIncluded:
+          type: integer
+        source:
+          type: string
+    Pharmaceutical:
+      type: object
+      properties:
+        requestPharmaceuticalID:
+          type: integer
+        requestID:
+          type: integer
+        pharmaceuticalGUID:
+          type: string
+        quantity:
+          type: number
+        duration:
+          type: number
+        frequency:
+          type: number
+        period:
+          type: number
+    Attachment:
+      type: object
+      properties:
+        requestAttachmentID:
+          type: integer
+        requestID:
+          type: integer
+        type:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+        description:
+          type: string
