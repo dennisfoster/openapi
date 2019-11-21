@@ -1,0 +1,6 @@
+body {
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+    background-image: url(/images/background.png) !important;
+    background-size: cover !important;    
+}
