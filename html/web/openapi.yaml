@@ -47,7 +47,24 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Package'
+              type: object
+              properties:
+                parentPackageID:
+                  type: integer
+                packageTypeID:
+                  type: integer
+                bodyPartID:
+                  type: integer
+                bodyPartSlug:
+                  type: integer
+                title:
+                  type: string
+                description:
+                  type: string
+                totalNationalValue:
+                  type: integer
+                employeeID:
+                  type: integer
         required: true
       responses:
         '200':
@@ -212,7 +229,59 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Request'
+              type: object
+              properties:
+                discloseExpert:
+                  type: boolean
+                customHeader:
+                  type: string
+                notes:
+                  type: string
+                dueDate:
+                  type: string
+                promoCode:
+                  type: string
+                _embedded:
+                  type: object
+                  properties:
+                    Type:
+                      $ref: '#/components/schemas/TypeRequest'
+                    Status:
+                      $ref: '#/components/schemas/Status'
+                    Report:
+                      $ref: '#/components/schemas/Report'
+                    Organization:
+                      $ref: '#/components/schemas/Organization'
+                    User:
+                      $ref: '#/components/schemas/User'
+                    Claim:
+                      $ref: '#/components/schemas/Claim'
+                    Attorney:
+                      $ref: '#/components/schemas/Attorney'
+                    Contact:
+                      $ref: '#/components/schemas/Contact'
+                    Patient:
+                      $ref: '#/components/schemas/Patient'
+                    Packages:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/RequestPackage'
+                    Bills:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Bill'
+                    Pharmaceuticals:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Pharmaceutical'
+                    Attachments:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Attachment'
+                    Documents:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Document'
         required: true
       responses:
         '200':
@@ -426,7 +495,20 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Organization'
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                subPremises:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                zip:
+                  type: string
         required: true
       responses:
         '200':
@@ -585,7 +667,22 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                firstName:
+                  type: string
+                email:
+                  type: string
+                directLine:
+                  type: string
+                directExtension:
+                  type: string
+                cellphone:
+                  type: string
+                other:
+                  type: string
         required: true
       responses:
         '200':
@@ -744,7 +841,30 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Patient'
+              type: object
+              properties:
+                firstName:
+                  type: string
+                middleInitial:
+                  type: string
+                lastName:
+                  type: string
+                sex:
+                  type: string
+                address:
+                  type: string
+                subPremises:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                zip:
+                  type: string
+                country:
+                  type: string
+                dateOfBirth:
+                  type: string
         required: true
       responses:
         '200':
