@@ -39,7 +39,7 @@ return [
         'GET organization/search' => 'site/placeholder',
         'GET organization/<id:\d+>' => 'organization/view',
         'PATCH organization/<id:\d+>/<key>/<value>' => 'organization/update',
-        'DELETE organization/<id>' => 'site/placeholder',
+        'DELETE organization/<id>' => 'organization/delete',
 
         /* Users */
         'GET user' => 'user/index',
@@ -47,7 +47,7 @@ return [
         'GET user/default' => 'site/placeholder',
         'GET user/search' => 'site/placeholder',
         'GET user/<id:\d+>' => 'user/view',
-        'DELETE user/<id:\d+>' => 'site/placeholder',
+        'DELETE user/<id:\d+>' => 'user/delete',
         'PATCH user/<id:\d+>/<key>/<value>' => 'user/update',
 
         /* Patients */
@@ -56,7 +56,7 @@ return [
         'GET patient/default' => 'site/placeholder',
         'GET patient/search' => 'site/placeholder',
         'GET patient/<id:\d+>' => 'patient/view',
-        'DELETE patient/<id:\d+>' => 'site/placeholder',        
+        'DELETE patient/<id:\d+>' => 'patient/delete',
         'PATCH patient/<id:\d+>/<key>/<value>' => 'patientsupdate',
 
     ],
