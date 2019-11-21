@@ -89,5 +89,5 @@ class RequestPharmaceutical extends \yii\db\ActiveRecord
 
     public function getPharmaceutical() {
 		return $this->hasOne(Pharmaceutical::className(), ['pharmaceuticalGUID' => 'pharmaceuticalGUID']);
-	}        
+	}
 }

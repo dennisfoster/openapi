@@ -21,6 +21,21 @@ $config = [
                     'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
                 ],
             ],
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->statusCode == 401) {
+                    $response->data = [
+                        'error' => $response->data['message']
+                    ];
+                }
+                if ($response->statusCode == 404) {
+                    $response->data = [
+                        'error' => 'Not found'
+                    ];
+                    $response->format = \yii\web\Response::FORMAT_JSON;
+                }
+            }
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -40,14 +55,18 @@ $config = [
         ],
         'jwt' => [
             'class' => \sizeg\jwt\Jwt::class,
-            'key' => $_SERVER['API_KEY'],
+            'key' => 'file:///etc/keys/openapi/pubkey.pem',
             // You have to configure ValidationData informing all claims you want to validate the token.
             'jwtValidationData' => \app\components\JwtValidationData::class,
         ],
         'db' => require(__DIR__ . '/db.php'),
         'dbPackage' => require(__DIR__ . '/dbPackage.php'),
-        'response' => require(__DIR__ . '/response.php'),
-        'urlManager' => require(__DIR__ . '/route.php')
+        'dbIntranet' => require(__DIR__ . '/dbIntranet.php'),        
+        // 'response' => require(__DIR__ . '/response.php'),
+        'urlManager' => require(__DIR__ . '/route.php'),
+        'amazon' => [
+            'class' => 'app\components\amazon\Amazon',
+        ],
     ],
     'params' => $params,
 ];

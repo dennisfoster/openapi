@@ -10,19 +10,33 @@ namespace app\controllers;
 
 use Yii;
 use \yii\rest\Controller;
-use app\models\Users;
+use app\models\Patient;
 use \yii\data\ActiveDataProvider;
+use sizeg\jwt\Jwt;
+use sizeg\jwt\JwtHttpBearerAuth;
 
-class UsersController extends Controller {
+class PatientController extends Controller {
+
+    public function behaviors() {
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator'] = [
+        'class' => JwtHttpBearerAuth::class,
+        'optional' => [
+            'login',
+        ],
+    ];
+
+    return $behaviors;
+    }
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
-        'collectionEnvelope' => 'Users',
+        'collectionEnvelope' => 'Patients',
     ];
 
     public function actionIndex() {
 		try {
-			$query = Users::find();
+			$query = Patient::find();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,7 +51,7 @@ class UsersController extends Controller {
 
     public function actionView($id) {
 		try {
-			$response = Users::find()->where(['userID' => $id])->one();
+			$response = Patient::find()->where(['patientID' => $id])->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
 			return null;
@@ -47,9 +61,8 @@ class UsersController extends Controller {
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$model = Users::findOne(['userID' => $id]);
+			$model = Patient::findOne(['patientID' => $id]);
             $model->$key = $value;
-            $model->updatedOn = time();
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;

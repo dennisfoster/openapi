@@ -10,19 +10,33 @@ namespace app\controllers;
 
 use Yii;
 use \yii\rest\Controller;
-use app\models\Patients;
+use app\models\Organization;
 use \yii\data\ActiveDataProvider;
+use sizeg\jwt\Jwt;
+use sizeg\jwt\JwtHttpBearerAuth;
 
-class PatientsController extends Controller {
+class OrganizationController extends Controller {
+
+    public function behaviors() {
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator'] = [
+        'class' => JwtHttpBearerAuth::class,
+        'optional' => [
+            'login',
+        ],
+    ];
+
+    return $behaviors;
+    }
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
-        'collectionEnvelope' => 'Patients',
+        'collectionEnvelope' => 'Organizations',
     ];
 
     public function actionIndex() {
 		try {
-			$query = Patients::find();
+			$query = Organization::find();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,7 +51,7 @@ class PatientsController extends Controller {
 
     public function actionView($id) {
 		try {
-			$response = Patients::find()->where(['patientID' => $id])->one();
+			$response = Organization::find()->where(['organizationID' => $id])->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
 			return null;
@@ -47,7 +61,7 @@ class PatientsController extends Controller {
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$model = Patients::findOne(['patientID' => $id]);
+			$model = Organization::findOne(['organizationID' => $id]);
             $model->$key = $value;
             $model->save();
 		} catch (\Exception $ex) {

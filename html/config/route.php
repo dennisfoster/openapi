@@ -13,31 +13,35 @@ return [
         '/' => 'site/index',
 
         /* Packages */
-        'GET packages' => 'packages/index',
-        'POST packages' => 'packages/create',
-        'GET packages/<id>' => 'packages/view',
-        'DELETE packages/<id>' => 'packages/delete',
-        'PATCH packages/<id>/<key>/<value>' => 'packages/update',
+        'GET package' => 'package/index',
+        'POST package' => 'package/create',
+        'GET package/search' => 'package/search',
+        'GET package/<id:\d+>' => 'package/view',
+        'DELETE package/<id:\d+>' => 'package/delete',
+        'PATCH package/<id:\d+>/<key>/<value>' => 'package/update',
 
         /* Requests */
-        'GET requests' => 'requests/index',
-        'GET requests/<id>' => 'requests/view',
-        'PATCH requests/<id>/<key>/<value>' => 'requests/update',
+        'GET request' => 'request/index',
+        'GET request/attachment/<id:\d+>' => 'attachment/view',
+        'GET request/document/<id:\d+>' => 'document/view',
+        'GET request/<id:\d+>' => 'request/view',
+        'PATCH request/<id:\d+>/<key>/<value>' => 'request/update',
+        'POST request/<id:\d+>/attachment' => 'attachment/create',
 
         /* Organizations */
-        'GET organizations' => 'organizations/index',
-        'GET organizations/<id>' => 'organizations/view',
-        'PATCH organizations/<id>/<key>/<value>' => 'organizations/update',
+        'GET organization' => 'organization/index',
+        'GET organization/<id:\d+>' => 'organization/view',
+        'PATCH organization/<id:\d+>/<key>/<value>' => 'organization/update',
 
         /* Users */
-        'GET users' => 'users/index',
-        'GET users/<id>' => 'users/view',
-        'PATCH users/<id>/<key>/<value>' => 'users/update',
+        'GET user' => 'user/index',
+        'GET user/<id:\d+>' => 'user/view',
+        'PATCH user/<id:\d+>/<key>/<value>' => 'user/update',
 
         /* Patients */
-        'GET patients' => 'patients/index',
-        'GET patients/<id>' => 'patients/view',
-        'PATCH patients/<id>/<key>/<value>' => 'patients/update',
+        'GET patient' => 'patient/index',
+        'GET patient/<id:\d+>' => 'patient/view',
+        'PATCH patient/<id:\d+>/<key>/<value>' => 'patientsupdate',
 
     ],
 ];

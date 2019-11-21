@@ -56,7 +56,7 @@ use yii\helpers\Url;
  * @property string $procedureByUser
  * @property string $customPackage
  */
-class Requests extends \yii\db\ActiveRecord implements Linkable
+class Request extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * @inheritdoc
@@ -122,10 +122,11 @@ class Requests extends \yii\db\ActiveRecord implements Linkable
                     'Attorney' => [],
                     'Contact' => (isset($row->contact)) ? $row->contact : [],
                     'Patient' => $row->patient,
-                    'Package' => $row->requestPackage,
-                    'Bill' => $row->bill,
-                    'Pharmaceutical' => $row->pharmaceutical,
-                    'Attachment' => $row->attachment,
+                    'Packages' => $row->requestPackage,
+                    'Bills' => $row->bill,
+                    'Pharmaceuticals' => $row->pharmaceutical,
+                    'Attachments' => $row->attachment,
+                    'Documents' => $row->document,
             ];
             },
         ];
@@ -231,15 +232,15 @@ class Requests extends \yii\db\ActiveRecord implements Linkable
 	}
 
     public function getOrganization() {
-		return $this->hasOne(Organizations::className(), ['organizationID' => 'organizationID']);
+		return $this->hasOne(Organization::className(), ['organizationID' => 'organizationID']);
 	}
 
     public function getUser() {
-		return $this->hasOne(Users::className(), ['userID' => 'userID']);
+		return $this->hasOne(User::className(), ['userID' => 'userID']);
 	}
 
     public function getPatient() {
-		return $this->hasOne(Patients::className(), ['patientID' => 'patientID']);
+		return $this->hasOne(Patient::className(), ['patientID' => 'patientID']);
 	}
 
     public function getContact() {
@@ -260,6 +261,10 @@ class Requests extends \yii\db\ActiveRecord implements Linkable
 
     public function getAttachment() {
 		return $this->hasMany(RequestAttachment::className(), ['requestID' => 'requestID'])->where(['request_attachment.isDeleted' => 0]);
+	}
+
+    public function getDocument() {
+		return RequestDocument::getPublishedDocumentsByRequestGUID($this->requestGUID);
 	}
 
 }
