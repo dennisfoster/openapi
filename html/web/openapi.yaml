@@ -4,9 +4,6 @@ info:
   title: AccuMed OpenAPI
   contact:
     email: info@accumedintel.com
-servers:
-  - description: AccuMed OpenAPI Server
-    url: http://openapi.localhost
 tags:
   - name: Package
   - name: Request
