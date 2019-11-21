@@ -8,3 +8,7 @@ body {
 .swagger-ui .info hgroup.main a {
   display: none !important;
 }
+
+.models {
+    display: none !important;
+}
