@@ -21,4 +21,9 @@ class SiteController extends \yii\web\Controller {
 		}
     }
 
+    public function actionPlaceholder() {
+        Yii::$app->response->statusCode = 501;
+		return null;
+    }
+
 }
