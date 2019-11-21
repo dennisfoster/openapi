@@ -70,4 +70,15 @@ class OrganizationController extends Controller {
 		}
         return $model;
 	}
+
+    public function actionDelete($id) {
+		try {
+			$model = Organization::findOne(['organizationID' => $id]);
+            $model->delete();
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return null;
+	}
 }

@@ -71,4 +71,15 @@ class UserController extends Controller {
 		}
         return $model;
 	}
+
+    public function actionDelete($id) {
+		try {
+			$model = User::findOne(['userID' => $id]);
+            $model->delete();
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return null;
+	}
 }
