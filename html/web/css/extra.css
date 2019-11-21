@@ -2,5 +2,9 @@ body {
     background-repeat: repeat !important;
     background-attachment: fixed !important;
     background-image: url(/images/background.png) !important;
-    background-size: cover !important;    
+    background-size: cover !important;
+}
+
+.swagger-ui .info hgroup.main a {
+  display: none !important;
 }
