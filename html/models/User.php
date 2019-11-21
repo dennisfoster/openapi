@@ -39,7 +39,7 @@ use yii\helpers\Url;
  * @property string $salesforceOAuth2RefreshToken
  * @property string $salesforceSignature
  */
-class Users extends \yii\db\ActiveRecord implements Linkable
+class User extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * @inheritdoc
@@ -143,7 +143,8 @@ class Users extends \yii\db\ActiveRecord implements Linkable
 
     public function getLinks() {
         return [
-            Link::REL_SELF => Url::to(['users/view', 'id' => $this->userID], true),
+            Link::REL_SELF => Url::to(['user/view', 'id' => $this->userID], true),
         ];
     }
+
 }

@@ -9,11 +9,25 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Packages;
+use app\models\Package;
 use \yii\rest\Controller;
 use \yii\data\ActiveDataProvider;
+use sizeg\jwt\Jwt;
+use sizeg\jwt\JwtHttpBearerAuth;
 
-class PackagesController extends Controller {
+class PackageController extends Controller {
+
+    public function behaviors() {
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator'] = [
+        'class' => JwtHttpBearerAuth::class,
+        'optional' => [
+            'login',
+        ],
+    ];
+
+    return $behaviors;
+    }
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -22,7 +36,7 @@ class PackagesController extends Controller {
 
 	public function actionIndex() {
 		try {
-			$query = Packages::find()->where(['isPublished' => '0']);
+			$query = Package::find()->where(['isPublished' => '0']);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -38,7 +52,7 @@ class PackagesController extends Controller {
     public function actionCreate() {
 		try {
 			$request = Yii::$app->request;
-            $packagesModel = new Packages([
+            $packagesModel = new Package([
                 'parentPackageID' => $request->getBodyParam('parentPackageID'),
                 'packageTypeID' => $request->getBodyParam('packageTypeID'),
                 'bodyPartID' => $request->getBodyParam('bodyPartID'),
@@ -67,7 +81,7 @@ class PackagesController extends Controller {
 
     public function actionView($id) {
 		try {
-			$response = Packages::findOne(['packageID' => $id]);
+			$response = Package::findOne(['packageID' => $id]);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
 			return null;
@@ -77,7 +91,7 @@ class PackagesController extends Controller {
 
     public function actionDelete($id) {
 		try {
-			$packagesModel = Packages::findOne(['packageID' => $id]);
+			$packagesModel = Package::findOne(['packageID' => $id]);
             $packagesModel->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
@@ -88,7 +102,7 @@ class PackagesController extends Controller {
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$packagesModel = Packages::findOne(['packageID' => $id]);
+			$packagesModel = Package::findOne(['packageID' => $id]);
             $packagesModel->$key = $value;
             $packagesModel->_updated = time();
             $packagesModel->save();
@@ -98,4 +112,21 @@ class PackagesController extends Controller {
 		}
         return $packagesModel;
 	}
+
+    public function actionSearch() {
+        try {
+            $terms = trim(Yii::$app->request->get('search'));
+            $query = Package::search($terms);
+        } catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ]
+        ]);
+        // return $query;
+    }
 }

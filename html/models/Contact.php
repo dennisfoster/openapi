@@ -103,5 +103,5 @@ class Contact extends \yii\db\ActiveRecord
 				return (isset($row->fax))? $row->fax: '';
 			},
 		];
-	}    
+	}
 }

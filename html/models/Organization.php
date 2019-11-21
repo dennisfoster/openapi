@@ -25,7 +25,7 @@ use yii\helpers\Url;
  * @property string $salesforceClientID
  * @property string $salesforceClientSecret
  */
-class Organizations extends \yii\db\ActiveRecord implements Linkable
+class Organization extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * @inheritdoc
@@ -95,7 +95,7 @@ class Organizations extends \yii\db\ActiveRecord implements Linkable
 
     public function getLinks() {
         return [
-            Link::REL_SELF => Url::to(['organizations/view', 'id' => $this->organizationID], true),
+            Link::REL_SELF => Url::to(['organization/view', 'id' => $this->organizationID], true),
         ];
     }
 

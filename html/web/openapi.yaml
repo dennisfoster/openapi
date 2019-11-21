@@ -8,18 +8,18 @@ servers:
   - description: AccuMed OpenAPI Server
     url: http://openapi.localhost
 tags:
-  - name: Packages
-  - name: Requests
-  - name: Organizations
-  - name: Users
-  - name: Patients
+  - name: Package
+  - name: Request
+  - name: Organization
+  - name: User
+  - name: Patient
 paths:
-  /packages:
+  /package:
     get:
       tags:
-      - Packages
+      - Package
       summary: Get all packages
-      operationId: getPackages
+      operationId: getPackage
       responses:
         '200':
           description: Successful operation
@@ -31,19 +31,21 @@ paths:
                   Packages:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Package'
+                      allOf:
+                        - $ref: '#/components/schemas/Package'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
     post:
       tags:
-      - Packages
+      - Package
       summary: Create new package
-      operationId: postPackages
+      operationId: createPackage
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Package'
         required: true
@@ -53,14 +55,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Package'
+                allOf:
+                  - $ref: '#/components/schemas/Package'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /packages/defaults:
+  /package/default:
     get:
       tags:
-      - Packages
+      - Package
       summary: Get default package
       operationId: getDefaultPackage
       responses:
@@ -70,12 +74,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Package'
-  /packages/search:
+  /package/search:
     get:
       tags:
-      - Packages
+      - Package
       summary: Search packages
-      operationId: searchPackages
+      operationId: searchPackage
       responses:
         '200':
           description: Successful operation
@@ -87,21 +91,23 @@ paths:
                   Packages:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Package'
+                      allOf:
+                        - $ref: '#/components/schemas/Package'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
-  /packages/{guid}:
+  /package/{id}:
     get:
       tags:
-      - Packages
-      summary: Get package by GUID
-      operationId: getPackageByGUID
+      - Package
+      summary: Get package by ID
+      operationId: getPackageByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of package
+        description: ID of package
         required: true
         schema:
           type: string
@@ -111,19 +117,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Package'
+                allOf:
+                  - $ref: '#/components/schemas/Package'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
     delete:
       tags:
-      - Packages
-      summary: Delete package by GUID
-      operationId: deletePackageByGUID
+      - Package
+      summary: Delete package by ID
+      operationId: deletePackageByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of package
+        description: ID of package
         required: true
         schema:
           type: string
@@ -134,16 +142,16 @@ paths:
         '405':
           description: Invalid input
           content: {}
-  /packages/{guid}/{key}/{value}:
+  /package/{id}/{key}/{value}:
     patch:
       tags:
-      - Packages
+      - Package
       summary: Update package
       operationId: updatePackage
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of package
+        description: ID of package
         required: true
         schema:
           type: string
@@ -165,16 +173,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Package'
+                allOf:
+                  - $ref: '#/components/schemas/Package'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /requests:
+  /request:
     get:
       tags:
-      - Requests
+      - Request
       summary: Get all requests
-      operationId: getRequests
+      operationId: getRequest
       responses:
         '200':
           description: Successful operation
@@ -186,32 +196,42 @@ paths:
                   Requests:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Request'
+                      allOf:
+                        - $ref: '#/components/schemas/Request'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
     post:
       tags:
-      - Requests
+      - Request
       summary: Create new request
-      operationId: postRequests
+      operationId: createRequest
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Request'
         required: true
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Request'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /requests/search:
+  /request/search:
     get:
       tags:
-      - Requests
+      - Request
       summary: Search requests
-      operationId: searchRequests
+      operationId: searchRequest
       responses:
         '200':
           description: Successful operation
@@ -223,21 +243,23 @@ paths:
                   Requests:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Request'
+                      allOf:
+                        - $ref: '#/components/schemas/Request'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
-  /requests/{guid}:
+  /request/{id}:
     get:
       tags:
-      - Requests
-      summary: Get request by GUID
-      operationId: getRequestByGUID
+      - Request
+      summary: Get request by ID
+      operationId: getRequestByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of request
+        description: ID of request
         required: true
         schema:
           type: string
@@ -247,11 +269,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Request'
-  /requests/defaults:
+                allOf:
+                  - $ref: '#/components/schemas/Request'
+                  - $ref: '#/components/schemas/Link'
+  /request/default:
     get:
       tags:
-      - Requests
+      - Request
       summary: Get default request
       operationId: getDefaultRequest
       responses:
@@ -261,16 +285,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Request'
-  /requests/{guid}/{key}/{value}:
+  /request/{id}/{key}/{value}:
     patch:
       tags:
-      - Requests
+      - Request
       summary: Update request
       operationId: updateRequest
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of request
+        description: ID of request
         required: true
         schema:
           type: string
@@ -292,16 +316,89 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Request'
+                allOf:
+                  - $ref: '#/components/schemas/Request'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /organizations:
+  /request/attachment/{id}:
     get:
       tags:
-      - Organizations
+      - Request
+      summary: Get request attachment by ID
+      operationId: getRequestAttachmentByID
+      parameters:
+      - name: id
+        in: path
+        description: ID of request attachment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Attachment'
+                  - $ref: '#/components/schemas/Link'
+    post:
+      tags:
+      - Request
+      summary: Create new request attachment
+      operationId: createRequestAttachment
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                upload:
+                  type: string
+                  description: file to upload
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Attachment'
+                  - $ref: '#/components/schemas/Link'
+        '405':
+          description: Invalid input
+          content: {}
+  /request/document/{id}:
+    get:
+      tags:
+      - Request
+      summary: Get request document by ID
+      operationId: getRequestDocumentByID
+      parameters:
+      - name: id
+        in: path
+        description: ID of request document
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Document'
+                  - $ref: '#/components/schemas/Link'
+  /organization:
+    get:
+      tags:
+      - Organization
       summary: Get all organizations
-      operationId: getOrganizations
+      operationId: getOrganization
       responses:
         '200':
           description: Successful operation
@@ -313,30 +410,40 @@ paths:
                   Organizations:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Organization'
+                      allOf:
+                        - $ref: '#/components/schemas/Organization'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
     post:
       tags:
-      - Organizations
+      - Organization
       summary: Create new organization
-      operationId: postOrganizations
+      operationId: createOrganizations
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Organization'
         required: true
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Organization'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /organizations/defaults:
+  /organization/default:
     get:
       tags:
-      - Organizations
+      - Organization
       summary: Get default organization
       operationId: getDefaultOrganization
       responses:
@@ -346,12 +453,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-  /organizations/search:
+  /organization/search:
     get:
       tags:
-      - Organizations
+      - Organization
       summary: Search organizations
-      operationId: searchOrganizations
+      operationId: searchOrganization
       responses:
         '200':
           description: Successful operation
@@ -363,21 +470,23 @@ paths:
                   Organizations:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Organization'
+                      allOf:
+                        - $ref: '#/components/schemas/Organization'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
-  /organizations/{guid}:
+  /organization/{id}:
     get:
       tags:
-      - Organizations
-      summary: Get organization by GUID
-      operationId: getOrganizationByGUID
+      - Organization
+      summary: Get organization by ID
+      operationId: getOrganizationByID
       parameters:
       - name: guid
         in: path
-        description: GUID of organization
+        description: ID of organization
         required: true
         schema:
           type: string
@@ -387,16 +496,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                allOf:
+                  - $ref: '#/components/schemas/Organization'
+                  - $ref: '#/components/schemas/Link'
     delete:
       tags:
-      - Organizations
-      summary: Delete organization by GUID
-      operationId: deleteOrganizationByGUID
+      - Organization
+      summary: Delete organization by ID
+      operationId: deleteOrganizationByID
       parameters:
       - name: guid
         in: path
-        description: GUID of organization
+        description: ID of organization
         required: true
         schema:
           type: string
@@ -404,16 +515,16 @@ paths:
         '200':
           description: Successful operation
           content: {}
-  /organizations/{guid}/{key}/{value}:
+  /organization/{id}/{key}/{value}:
     patch:
       tags:
-      - Organizations
+      - Organization
       summary: Update organization
       operationId: updateOrganization
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of organization
+        description: ID of organization
         required: true
         schema:
           type: string
@@ -435,16 +546,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                allOf:
+                  - $ref: '#/components/schemas/Organization'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /users:
+  /user:
     get:
       tags:
-      - Users
+      - User
       summary: Get all users
-      operationId: getUsers
+      operationId: getUser
       responses:
         '200':
           description: Successful operation
@@ -456,30 +569,40 @@ paths:
                   Users:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
+                      allOf:
+                        - $ref: '#/components/schemas/User'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
     post:
       tags:
-      - Users
+      - User
       summary: Create new user
-      operationId: postUsers
+      operationId: createUser
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/User'
         required: true
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /users/defaults:
+  /user/default:
     get:
       tags:
-      - Users
+      - User
       summary: Get default user
       operationId: getDefaultUser
       responses:
@@ -489,12 +612,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /users/search:
+  /user/search:
     get:
       tags:
-      - Users
+      - User
       summary: Search Users
-      operationId: searchUsers
+      operationId: searchUser
       responses:
         '200':
           description: Successful operation
@@ -506,21 +629,23 @@ paths:
                   Users:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
+                      allOf:
+                        - $ref: '#/components/schemas/User'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
-  /users/{guid}:
+  /user/{id}:
     get:
       tags:
-      - Users
-      summary: Get user by GUID
-      operationId: getUserByGUID
+      - User
+      summary: Get user by ID
+      operationId: getUserByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of user
+        description: ID of user
         required: true
         schema:
           type: string
@@ -530,16 +655,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/Link'
     delete:
       tags:
-      - Users
-      summary: Delete user by GUID
-      operationId: deleteUserByGUID
+      - User
+      summary: Delete user by ID
+      operationId: deleteUserByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of user
+        description: ID of user
         required: true
         schema:
           type: string
@@ -547,16 +674,16 @@ paths:
         '200':
           description: Successful operation
           content: {}
-  /users/{guid}/{key}/{value}:
+  /user/{id}/{key}/{value}:
     patch:
       tags:
-      - Users
+      - User
       summary: Update user
       operationId: updateUser
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of user
+        description: ID of user
         required: true
         schema:
           type: string
@@ -578,16 +705,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /patients:
+  /patient:
     get:
       tags:
-      - Patients
+      - Patient
       summary: Get all patients
-      operationId: getPatients
+      operationId: getPatient
       responses:
         '200':
           description: Successful operation
@@ -599,30 +728,40 @@ paths:
                   Patients:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Patient'
+                      allOf:
+                        - $ref: '#/components/schemas/Patient'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
     post:
       tags:
-      - Patients
+      - Patient
       summary: Create new patient
-      operationId: postPatients
+      operationId: createPatient
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/Patient'
         required: true
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Patient'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
-  /patients/defaults:
+  /patient/default:
     get:
       tags:
-      - Patients
+      - Patient
       summary: Get default patient
       operationId: getDefaultPatient
       responses:
@@ -632,12 +771,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Patient'
-  /patients/search:
+  /patient/search:
     get:
       tags:
-      - Patients
+      - Patient
       summary: Search Patients
-      operationId: searchPatients
+      operationId: searchPatient
       responses:
         '200':
           description: Successful operation
@@ -649,21 +788,23 @@ paths:
                   Patients:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Patient'
+                      allOf:
+                        - $ref: '#/components/schemas/Patient'
+                        - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
-  /patients/{guid}:
+  /patient/{id}:
     get:
       tags:
-      - Patients
-      summary: Get patient by GUID
-      operationId: getPatientByGUID
+      - Patient
+      summary: Get patient by ID
+      operationId: getPatientByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of patient
+        description: ID of patient
         required: true
         schema:
           type: string
@@ -673,16 +814,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Patient'
+                allOf:
+                  - $ref: '#/components/schemas/Patient'
+                  - $ref: '#/components/schemas/Link'
     delete:
       tags:
-      - Patients
-      summary: Delete patient by GUID
-      operationId: deletePatientByGUID
+      - Patient
+      summary: Delete patient by ID
+      operationId: deletePatientByID
       parameters:
-      - name: guid
+      - name: id
         in: path
-        description: GUID of patient
+        description: ID of patient
         required: true
         schema:
           type: string
@@ -690,10 +833,10 @@ paths:
         '200':
           description: Successful operation
           content: {}
-  /patients/{guid}/{key}/{value}:
+  /patient/{id}/{key}/{value}:
     patch:
       tags:
-      - Patients
+      - Patient
       summary: Update patient
       operationId: updatePatient
       parameters:
@@ -721,7 +864,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Patient'
+                allOf:
+                  - $ref: '#/components/schemas/Patient'
+                  - $ref: '#/components/schemas/Link'
         '405':
           description: Invalid input
           content: {}
@@ -766,8 +911,6 @@ components:
           type: string
         _updated:
           type: string
-        _links:
-          $ref: '#/components/schemas/Link'
     Request:
       type: object
       properties:
@@ -801,9 +944,13 @@ components:
             Report:
               $ref: '#/components/schemas/Report'
             Organization:
-              $ref: '#/components/schemas/Organization'
+              allOf:
+                - $ref: '#/components/schemas/Organization'
+                - $ref: '#/components/schemas/Link'
             User:
-              $ref: '#/components/schemas/User'
+              allOf:
+                - $ref: '#/components/schemas/User'
+                - $ref: '#/components/schemas/Link'
             Claim:
               $ref: '#/components/schemas/Claim'
             Attorney:
@@ -811,25 +958,33 @@ components:
             Contact:
               $ref: '#/components/schemas/Contact'
             Patient:
-              $ref: '#/components/schemas/Patient'
-            Package:
+              allOf:
+                - $ref: '#/components/schemas/Patient'
+                - $ref: '#/components/schemas/Link'
+            Packages:
               type: array
               items:
                 $ref: '#/components/schemas/RequestPackage'
-            Bill:
+            Bills:
               type: array
               items:
                 $ref: '#/components/schemas/Bill'
-            Pharmaceutical:
+            Pharmaceuticals:
               type: array
               items:
                 $ref: '#/components/schemas/Pharmaceutical'
-            Attachment:
+            Attachments:
               type: array
               items:
-                $ref: '#/components/schemas/Attachment'
-            _links:
-              $ref: '#/components/schemas/Link'
+                allOf:
+                  - $ref: '#/components/schemas/Attachment'
+                  - $ref: '#/components/schemas/Link'
+            Documents:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Document'
+                  - $ref: '#/components/schemas/Link'
     TypeRequest:
       type: object
       properties:
@@ -838,6 +993,13 @@ components:
         type:
           type: string
     TypeClaim:
+      type: object
+      properties:
+        slug:
+          type: string
+        type:
+          type: string
+    TypeDocument:
       type: object
       properties:
         slug:
@@ -877,8 +1039,6 @@ components:
           type: string
         zip:
           type: string
-        _links:
-          $ref: '#/components/schemas/Link'
     User:
       type: object
       properties:
@@ -902,8 +1062,6 @@ components:
           type: string
         other:
           type: string
-        _links:
-          $ref: '#/components/schemas/Link'
     Claim:
       type: object
       properties:
@@ -986,8 +1144,6 @@ components:
           type: number
         dateOfBirth:
           type: string
-        _links:
-          $ref: '#/components/schemas/Link'
     RequestPackage:
       type: object
       properties:
@@ -1064,14 +1220,35 @@ components:
           type: string
         description:
           type: string
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        link:
+          type: string
+        date:
+          type: string
+        mimeType:
+          type: string
+        _embedded:
+          type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/TypeDocument'
     Link:
       type: object
       properties:
-        self:
+        _links:
           type: object
           properties:
-            href:
-              type: string
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
     PageLink:
       type: object
       properties:

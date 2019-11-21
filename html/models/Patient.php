@@ -30,7 +30,7 @@ use yii\helpers\Url;
  * @property string $longitude
  * @property integer $_isDeleted
  */
-class Patients extends \yii\db\ActiveRecord implements Linkable
+class Patient extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * @inheritdoc
@@ -158,7 +158,7 @@ class Patients extends \yii\db\ActiveRecord implements Linkable
 
     public function getLinks() {
         return [
-            Link::REL_SELF => Url::to(['patients/view', 'id' => $this->patientID], true),
+            Link::REL_SELF => Url::to(['patient/view', 'id' => $this->patientID], true),
         ];
     }
 }

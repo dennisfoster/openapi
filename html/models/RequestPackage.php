@@ -110,5 +110,5 @@ class RequestPackage extends \yii\db\ActiveRecord
 				return (!empty($row->multiplierText))? $row->multiplierText: '';
 			},
 		];
-	}    
+	}
 }

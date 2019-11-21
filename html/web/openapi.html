@@ -37,13 +37,28 @@
     window.onload = function() {
       // Begin Swagger UI call region
         console.log(window.location.pathname);
+        const DisableTryItOutPlugin = function() {
+          return {
+            statePlugins: {
+              spec: {
+                wrapSelectors: {
+                  allowTryItOutFor: () => () => false
+                }
+              }
+            }
+          }
+        }
       const ui = SwaggerUIBundle({
         url: window.location.protocol + "//" + window.location.hostname + "/openapi.yaml",
         dom_id: '#swagger-ui',
+        docExpansion: 'none',        
         deepLinking: true,
           presets: [
               SwaggerUIBundle.presets.apis,
           ],
+          plugins: [
+            DisableTryItOutPlugin
+          ]
           // layout: "StandaloneLayout"
       })
       // End Swagger UI call region

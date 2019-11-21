@@ -10,10 +10,24 @@ namespace app\controllers;
 
 use Yii;
 use \yii\rest\Controller;
-use app\models\Requests;
+use app\models\Request;
 use \yii\data\ActiveDataProvider;
+use sizeg\jwt\Jwt;
+use sizeg\jwt\JwtHttpBearerAuth;
 
-class RequestsController extends Controller {
+class RequestController extends Controller {
+
+    public function behaviors() {
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator'] = [
+        'class' => JwtHttpBearerAuth::class,
+        'optional' => [
+            'login',
+        ],
+    ];
+
+    return $behaviors;
+    }
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -22,7 +36,7 @@ class RequestsController extends Controller {
 
     public function actionIndex() {
 		try {
-			$query = Requests::find()->with('typeRequest');
+			$query = Request::find();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,7 +51,7 @@ class RequestsController extends Controller {
 
     public function actionView($id) {
 		try {
-			$response = Requests::find()->where(['requestID' => $id])->with('typeRequest')->one();
+			$response = Request::find()->where(['requestID' => $id])->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
 			return null;
@@ -47,7 +61,7 @@ class RequestsController extends Controller {
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$model = Requests::findOne(['requestID' => $id]);
+			$model = Request::findOne(['requestID' => $id]);
             $model->$key = $value;
             $model->_updatedAt = time();
             $model->save();

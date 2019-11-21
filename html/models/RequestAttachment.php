@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\web\Link;
+use yii\web\Linkable;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "request_attachment".
@@ -20,7 +23,7 @@ use Yii;
  * @property string $totalCharges
  * @property integer $isDeleted
  */
-class RequestAttachment extends \yii\db\ActiveRecord
+class RequestAttachment extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * @inheritdoc
@@ -73,5 +76,12 @@ class RequestAttachment extends \yii\db\ActiveRecord
 		return [
 			'type', 'link', 'name', 'description', 'medicalProvider', 'dateOfService', 'totalCharges'
 		];
-	}    
+	}
+
+    public function getLinks() {
+        return [
+            Link::REL_SELF => Url::to(['attachment/view', 'id' => $this->requestAttachmentID], true),
+        ];
+    }
+
 }
