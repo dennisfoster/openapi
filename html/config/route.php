@@ -57,7 +57,7 @@ return [
         'GET patient/search' => 'site/placeholder',
         'GET patient/<id:\d+>' => 'patient/view',
         'DELETE patient/<id:\d+>' => 'patient/delete',
-        'PATCH patient/<id:\d+>/<key>/<value>' => 'patientsupdate',
+        'PATCH patient/<id:\d+>/<key>/<value>' => 'patient/update',
 
     ],
 ];
