@@ -81,4 +81,25 @@ class OrganizationController extends Controller {
 		}
         return null;
 	}
+
+    public function actionCreate() {
+		try {
+            $guid = new Guid;
+			$request = Yii::$app->request;
+            $model = new Organization([
+                'organizationGUID' => $guid->generateGuid(),
+                'name' => $request->getBodyParam('name'),
+                'address' => $request->getBodyParam('address'),
+                'subPremises' => $request->getBodyParam('subpremises'),
+                'city' => $request->getBodyParam('city'),
+                'state' => $request->getBodyParam('state'),
+                'zip' => $request->getBodyParam('zip')
+            ]);
+            $model->save();
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return $model;
+	}
 }

@@ -34,7 +34,7 @@ return [
 
         /* Organizations */
         'GET organization' => 'organization/index',
-        'POST organization' => 'site/placeholder',
+        'POST organization' => 'organization/create',
         'GET organization/default' => 'site/placeholder',
         'GET organization/search' => 'site/placeholder',
         'GET organization/<id:\d+>' => 'organization/view',
@@ -43,7 +43,7 @@ return [
 
         /* Users */
         'GET user' => 'user/index',
-        'POST user' => 'site/placeholder',
+        'POST user' => 'user/create',
         'GET user/default' => 'site/placeholder',
         'GET user/search' => 'site/placeholder',
         'GET user/<id:\d+>' => 'user/view',
@@ -52,7 +52,7 @@ return [
 
         /* Patients */
         'GET patient' => 'patient/index',
-        'POST patient' => 'site/placeholder',
+        'POST patient' => 'patient/create',
         'GET patient/default' => 'site/placeholder',
         'GET patient/search' => 'site/placeholder',
         'GET patient/<id:\d+>' => 'patient/view',

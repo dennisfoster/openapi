@@ -81,4 +81,30 @@ class PatientController extends Controller {
 		}
         return null;
 	}
+
+    public function actionCreate() {
+		try {
+			$request = Yii::$app->request;
+            $guid = new Guid;
+            $model = new Patient([
+                'patientGUID' => $guid->generateGuid(),
+                'lastName' => $request->getBodyParam('lastName'),
+                'firstName' => $request->getBodyParam('firstName'),
+                'middleInitial' => $request->getBodyParam('middleInitial'),
+                'sex' => $request->getBodyParam('sex'),
+                'address' => $request->getBodyParam('address'),
+                'subPremises' => $request->getBodyParam('subPremises'),
+                'city' => $request->getBodyParam('city'),
+                'state' => $request->getBodyParam('state'),
+                'zip' => $request->getBodyParam('zip'),
+                'country' => $request->getBodyParam('country'),
+    			'dateOfBirth' => $request->getBodyParam('dateOfBirth'),
+            ]);
+            $model->save();
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return $model;
+	}
 }

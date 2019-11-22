@@ -82,4 +82,33 @@ class UserController extends Controller {
 		}
         return null;
 	}
+
+    public function actionCreate() {
+		try {
+			$request = Yii::$app->request;
+            $tempPassword = User::generateTemporaryPassword();
+            $guid = new Guid;
+            $model = new User([
+                'userGUID' => $guid->generateGuid(),
+                'lastName' => $request->getBodyParam('lastName'),
+                'firstName' => $request->getBodyParam('firstName'),
+                'email' => $request->getBodyParam('email'),
+                'directLine' => $request->getBodyParam('directLine'),
+                'directExtension' => $request->getBodyParam('directExtension'),
+                'cellphone' => $request->getBodyParam('cellphone'),
+                'other' => $request->getBodyParam('other'),
+                'temporaryPassword' => $tempPassword,
+                'password' => Yii::$app->getSecurity()->generatePasswordHash($tempPassword),
+    			'authKey' => Yii::$app->security->generateRandomString(),
+    			'accessToken' => Yii::$app->security->generateRandomString(),
+    			'_createdOn' => time(),
+                'updatedOn' => time(),
+            ]);
+            $model->save();
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+        return $model;
+	}
 }
