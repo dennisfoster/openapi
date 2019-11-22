@@ -92,6 +92,7 @@ class Patient extends \yii\db\ActiveRecord implements Linkable
 
     public function fields() {
 		return [
+            'patientID',
 			'patientGUID' => function ($row) {
 				return (isset($row->patientGUID))? $row->patientGUID: '';
 			},
