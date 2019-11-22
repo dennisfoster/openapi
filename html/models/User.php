@@ -157,6 +157,6 @@ class User extends \yii\db\ActiveRecord implements Linkable
 			$password[] = $alphabet[$n];
 		}
 		return implode($password);
-	}    
+	}
 
 }

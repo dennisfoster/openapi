@@ -699,7 +699,7 @@ paths:
                   type: string
                 cellphone:
                   type: string
-                other:
+                phone:
                   type: string
         required: true
       responses:
