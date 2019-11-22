@@ -96,7 +96,7 @@ class UserController extends Controller {
                 'directLine' => $request->getBodyParam('directLine'),
                 'directExtension' => $request->getBodyParam('directExtension'),
                 'cellphone' => $request->getBodyParam('cellphone'),
-                'other' => $request->getBodyParam('other'),
+                'phone' => $request->getBodyParam('phone'),
                 'temporaryPassword' => $tempPassword,
                 'password' => Yii::$app->getSecurity()->generatePasswordHash($tempPassword),
     			'authKey' => Yii::$app->security->generateRandomString(),
