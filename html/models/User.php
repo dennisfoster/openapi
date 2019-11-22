@@ -107,6 +107,7 @@ class User extends \yii\db\ActiveRecord implements Linkable
 
     public function fields() {
         return [
+            'userID',
             'userGUID' => function ($row) {
 				return (isset($row->userGUID))? $row->userGUID: '';
 			},

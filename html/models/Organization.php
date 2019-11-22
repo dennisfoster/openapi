@@ -80,6 +80,7 @@ class Organization extends \yii\db\ActiveRecord implements Linkable
 
     public function fields() {
         return [
+            'organizationID',
             'organizationGUID',
             'name',
             'fullAddress' => function($row) {

@@ -1175,6 +1175,8 @@ components:
     Organization:
       type: object
       properties:
+        organizationID:
+          type: string
         organizationGUID:
           type: string
         name:
@@ -1194,6 +1196,8 @@ components:
     User:
       type: object
       properties:
+        userID:
+          type: string
         userGUID:
           type: string
         name:
@@ -1264,6 +1268,8 @@ components:
     Patient:
       type: object
       properties:
+        patientID:
+          type: string
         patientGUID:
           type: string
         name:
