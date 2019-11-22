@@ -994,7 +994,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: GUID of patient
+        description: ID of patient
         required: true
         schema:
           type: string
