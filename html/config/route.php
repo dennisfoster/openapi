@@ -28,6 +28,7 @@ return [
         'GET request/default' => 'site/placeholder',
         'GET request/attachment/<id:\d+>' => 'attachment/view',
         'GET request/document/<id:\d+>' => 'document/view',
+        'GET request/document/<id:\d+>/download' => 'document/download',        
         'GET request/<id:\d+>' => 'request/view',
         'PATCH request/<id:\d+>/<key>/<value>' => 'request/update',
         'POST request/<id:\d+>/attachment' => 'attachment/create',

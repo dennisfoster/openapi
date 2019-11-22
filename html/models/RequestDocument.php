@@ -85,6 +85,7 @@ class RequestDocument extends \yii\db\ActiveRecord implements Linkable {
     public function getLinks() {
         return [
             Link::REL_SELF => Url::to(['document/view', 'id' => $this->reportID], true),
+            'download' => Url::to(['document/download', 'id' => $this->reportID], true),
         ];
     }
 }

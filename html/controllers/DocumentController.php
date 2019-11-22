@@ -34,6 +34,30 @@ class DocumentController extends Controller {
         'collectionEnvelope' => 'Documents',
     ];
 
+    public function actionDownload($id) {
+		try {
+            $document = (object) RequestDocument::find()->where(['reportID' => $id])->one()->toArray();
+
+			if (empty($document->name)) {
+				$document->name = 'AccuMed_Attachment_' . date('Ymd_Hia');
+			}
+
+			$documentName = str_replace('/tmp/', '', $document->link);
+			$tempFile = Yii::$app->amazon->getObject($documentName);
+		} catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 405;
+			return null;
+		}
+
+        header('Content-Type: application/pdf');
+        header('Cache-Control: private');
+        header('Content-Disposition: inline; filename="' . $document->name . '.pdf";');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . filesize($tempFile));
+        header('Accept-Ranges: bytes');
+        @readfile($tempFile);
+    }
+
     public function actionView($id) {
 		try {
 			$response = RequestDocument::find()->where(['reportID' => $id])->one();
@@ -42,6 +66,5 @@ class DocumentController extends Controller {
 			return null;
 		}
         return $response;
-	}
-
+	}    
 }
