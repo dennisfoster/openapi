@@ -111,4 +111,28 @@ class UserController extends Controller {
 		}
         return $model;
 	}
+
+    public function actionSearch() {
+        try {
+            $search = '%' . trim(Yii::$app->request->get('search')) . '%';
+            $sql = 'SELECT * FROM user WHERE
+                lastName LIKE :search OR
+                firstName LIKE :search OR
+                email LIKE :search OR
+                directLine LIKE :search OR
+                directExtension LIKE :search OR
+                cellphone LIKE :search OR
+                phone LIKE :search';
+            $query = User::findBySql($sql, [':search' => $search]);
+        } catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 500;
+            return null;
+        }
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ]
+        ]);
+    }
 }

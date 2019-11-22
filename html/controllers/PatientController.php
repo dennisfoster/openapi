@@ -107,4 +107,29 @@ class PatientController extends Controller {
 		}
         return $model;
 	}
+
+    public function actionSearch() {
+        try {
+            $search = '%' . trim(Yii::$app->request->get('search')) . '%';
+            $sql = 'SELECT * FROM patient WHERE
+                lastName LIKE :search OR
+                firstName LIKE :search OR
+                address LIKE :search OR
+                subPremises LIKE :search OR
+                city LIKE :search OR
+                zip LIKE :search OR
+                dateOfBirth LIKE :search OR
+                state LIKE :search';
+            $query = Patient::findBySql($sql, [':search' => $search]);
+        } catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 500;
+            return null;
+        }
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ]
+        ]);
+    }
 }

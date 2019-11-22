@@ -102,4 +102,27 @@ class OrganizationController extends Controller {
 		}
         return $model;
 	}
+
+    public function actionSearch() {
+        try {
+            $search = '%' . trim(Yii::$app->request->get('search')) . '%';
+            $sql = 'SELECT * FROM organization WHERE
+                name LIKE :search OR
+                address LIKE :search OR
+                subPremises LIKE :search OR
+                city LIKE :search OR
+                state LIKE :search OR
+                zip LIKE :search';
+            $query = Organization::findBySql($sql, [':search' => $search]);
+        } catch (\Exception $ex) {
+            Yii::$app->response->statusCode = 500;
+            return null;
+        }
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ]
+        ]);
+    }
 }

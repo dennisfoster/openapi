@@ -94,6 +94,13 @@ paths:
       - Package
       summary: Search packages
       operationId: searchPackage
+      parameters:
+      - name: search
+        in: query
+        description: Search string
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
@@ -298,6 +305,13 @@ paths:
       - Request
       summary: Search requests
       operationId: searchRequest
+      parameters:
+      - name: search
+        in: query
+        description: Search string
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
@@ -538,6 +552,13 @@ paths:
       - Organization
       summary: Search organizations
       operationId: searchOrganization
+      parameters:
+      - name: search
+        in: query
+        description: Search string
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
@@ -712,6 +733,13 @@ paths:
       - User
       summary: Search Users
       operationId: searchUser
+      parameters:
+      - name: search
+        in: query
+        description: Search string
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
@@ -894,6 +922,13 @@ paths:
       - Patient
       summary: Search Patients
       operationId: searchPatient
+      parameters:
+      - name: search
+        in: query
+        description: Search string
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Successful operation
