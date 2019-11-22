@@ -584,7 +584,7 @@ paths:
       summary: Get organization by ID
       operationId: getOrganizationByID
       parameters:
-      - name: guid
+      - name: id
         in: path
         description: ID of organization
         required: true
@@ -605,7 +605,7 @@ paths:
       summary: Delete organization by ID
       operationId: deleteOrganizationByID
       parameters:
-      - name: guid
+      - name: id
         in: path
         description: ID of organization
         required: true
@@ -992,7 +992,7 @@ paths:
       summary: Update patient
       operationId: updatePatient
       parameters:
-      - name: guid
+      - name: id
         in: path
         description: GUID of patient
         required: true
