@@ -9,25 +9,11 @@
 namespace app\controllers;
 
 use Yii;
-use \yii\rest\Controller;
 use app\models\RequestDocument;
 use \yii\data\ActiveDataProvider;
-use sizeg\jwt\Jwt;
-use sizeg\jwt\JwtHttpBearerAuth;
+use app\components\BaseController;
 
-class DocumentController extends Controller {
-
-    public function behaviors() {
-    $behaviors = parent::behaviors();
-    $behaviors['authenticator'] = [
-        'class' => JwtHttpBearerAuth::class,
-        'optional' => [
-            'login',
-        ],
-    ];
-
-    return $behaviors;
-    }
+class DocumentController extends BaseController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -66,5 +52,5 @@ class DocumentController extends Controller {
 			return null;
 		}
         return $response;
-	}    
+	}
 }

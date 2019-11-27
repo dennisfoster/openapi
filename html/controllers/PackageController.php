@@ -10,24 +10,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Package;
-use \yii\rest\Controller;
+use app\components\BaseController;
 use \yii\data\ActiveDataProvider;
-use sizeg\jwt\Jwt;
-use sizeg\jwt\JwtHttpBearerAuth;
 
-class PackageController extends Controller {
-
-    public function behaviors() {
-    $behaviors = parent::behaviors();
-    $behaviors['authenticator'] = [
-        'class' => JwtHttpBearerAuth::class,
-        'optional' => [
-            'login',
-        ],
-    ];
-
-    return $behaviors;
-    }
+class PackageController extends BaseController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -41,6 +27,7 @@ class PackageController extends Controller {
             Yii::$app->response->statusCode = 500;
 			return null;
 		}
+
         return new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
@@ -73,7 +60,7 @@ class PackageController extends Controller {
             ]);
             $packagesModel->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $packagesModel;
@@ -83,18 +70,22 @@ class PackageController extends Controller {
 		try {
 			$response = Package::findOne(['packageID' => $id]);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $response;
 	}
 
     public function actionDelete($id) {
+
 		try {
 			$packagesModel = Package::findOne(['packageID' => $id]);
+            if (!$packagesModel) {
+                throw new \Exception;
+            }
             $packagesModel->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return null;
@@ -107,7 +98,7 @@ class PackageController extends Controller {
             $packagesModel->_updated = time();
             $packagesModel->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $packagesModel;
@@ -118,7 +109,7 @@ class PackageController extends Controller {
             $terms = trim(Yii::$app->request->get('search'));
             $query = Package::search($terms);
         } catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return new ActiveDataProvider([

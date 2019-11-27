@@ -10,6 +10,7 @@ tags:
   - name: Organization
   - name: User
   - name: Patient
+  - name: Healthcheck
 paths:
   /package:
     get:
@@ -72,7 +73,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /package/default:
@@ -141,7 +142,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
     delete:
@@ -160,7 +161,7 @@ paths:
         '200':
           description: Successful operation
           content: {}
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /package/{id}/{key}/{value}:
@@ -197,7 +198,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /request:
@@ -296,7 +297,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /request/search:
@@ -399,7 +400,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /request/attachment/{id}:
@@ -448,7 +449,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /request/document/{id}:
@@ -473,6 +474,27 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Document'
                   - $ref: '#/components/schemas/Link'
+  /request/document/{id}/download:
+    get:
+      tags:
+      - Request
+      summary: Download request document by ID
+      operationId: downloadRequestDocumentByID
+      parameters:
+      - name: id
+        in: path
+        description: ID of request document
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
   /organization:
     get:
       tags:
@@ -530,7 +552,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /organization/default:
@@ -649,7 +671,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /user:
@@ -711,7 +733,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /user/default:
@@ -830,7 +852,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /patient:
@@ -900,7 +922,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
   /patient/default:
@@ -1019,9 +1041,20 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-        '405':
+        '400':
           description: Invalid input
           content: {}
+  /healthcheck:
+    get:
+      tags:
+      - Healthcheck
+      summary: Healthcheck endpoint
+      operationId: healthcheck
+      responses:
+        '200':
+          description: API is functioning properly
+        '500':
+          description: API healthcheck failed
 components:
   schemas:
     Package:

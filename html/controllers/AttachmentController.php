@@ -9,27 +9,13 @@
 namespace app\controllers;
 
 use Yii;
-use \yii\rest\Controller;
 use app\models\RequestAttachment;
 use \yii\data\ActiveDataProvider;
-use sizeg\jwt\Jwt;
-use sizeg\jwt\JwtHttpBearerAuth;
 use yii\web\UploadedFile;
 use app\components\amazon\Amazon;
+use app\components\BaseController;
 
-class AttachmentController extends Controller {
-
-    public function behaviors() {
-    $behaviors = parent::behaviors();
-    $behaviors['authenticator'] = [
-        'class' => JwtHttpBearerAuth::class,
-        'optional' => [
-            'login',
-        ],
-    ];
-
-    return $behaviors;
-    }
+class AttachmentController extends BaseController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
