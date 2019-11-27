@@ -23,6 +23,9 @@ class PatientController extends BaseController {
     public function actionIndex() {
 		try {
 			$query = Patient::find();
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->where(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,75 +40,32 @@ class PatientController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = Patient::find()->where(['patientID' => $id])->one();
+			$query = Patient::find()->where(['patientID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $response;
-	}
-
-    public function actionUpdate($id, $key, $value) {
-		try {
-			$model = Patient::findOne(['patientID' => $id]);
-            $model->$key = $value;
-            $model->save();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return $model;
-	}
-
-    public function actionDelete($id) {
-		try {
-			$model = Patient::findOne(['patientID' => $id]);
-            $model->delete();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return null;
-	}
-
-    public function actionCreate() {
-		try {
-			$request = Yii::$app->request;
-            $guid = new Guid;
-            $model = new Patient([
-                'patientGUID' => $guid->generateGuid(),
-                'lastName' => $request->getBodyParam('lastName'),
-                'firstName' => $request->getBodyParam('firstName'),
-                'middleInitial' => $request->getBodyParam('middleInitial'),
-                'sex' => $request->getBodyParam('sex'),
-                'address' => $request->getBodyParam('address'),
-                'subPremises' => $request->getBodyParam('subPremises'),
-                'city' => $request->getBodyParam('city'),
-                'state' => $request->getBodyParam('state'),
-                'zip' => $request->getBodyParam('zip'),
-                'country' => $request->getBodyParam('country'),
-    			'dateOfBirth' => $request->getBodyParam('dateOfBirth'),
-            ]);
-            $model->save();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return $model;
+        return $query->one();
 	}
 
     public function actionSearch() {
         try {
             $search = '%' . trim(Yii::$app->request->get('search')) . '%';
             $sql = 'SELECT * FROM patient WHERE
-                lastName LIKE :search OR
+                (lastName LIKE :search OR
                 firstName LIKE :search OR
                 address LIKE :search OR
                 subPremises LIKE :search OR
                 city LIKE :search OR
                 zip LIKE :search OR
                 dateOfBirth LIKE :search OR
-                state LIKE :search';
+                state LIKE :search)';
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $sql .= ' AND organizationID = ' . $this->_organization;
+            }
             $query = Patient::findBySql($sql, [':search' => $search]);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;

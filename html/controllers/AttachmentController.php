@@ -10,6 +10,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\RequestAttachment;
+use app\models\Request;
 use \yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 use app\components\amazon\Amazon;
@@ -23,9 +24,16 @@ class AttachmentController extends BaseController {
     ];
 
     public function actionCreate($id) {
+        $query = Request::find()->where(['requestID' => $id]);
+        if ($this->_scope != self::SCOPE_ADMIN) {
+            $query = $query->andWhere(['organizationID' => $this->_organization]);
+        }
+        if ($query->count() == 0) {
+            Yii::$app->response->statusCode = 400;
+			return null;
+        }
 		try {
 			$file = UploadedFile::getInstanceByName('upload');
-
 
             Yii::$app->amazon->filetype = 'attachment';
     		Yii::$app->amazon->encryptFile($file->tempName);
@@ -65,12 +73,16 @@ class AttachmentController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = RequestAttachment::find()->where(['requestAttachmentID' => $id])->one();
+			$query = RequestAttachment::find();
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->joinWith('request')->where(['organizationID' => $this->_organization]);
+            }
+            $query = $query->andWhere(['requestAttachmentID' => $id]);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $response;
+        return $query->one();
 	}
 
 }

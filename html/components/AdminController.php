@@ -9,15 +9,8 @@
 namespace app\components;
 
 use Yii;
-use \yii\rest\Controller;
-use \yii\data\ActiveDataProvider;
-use sizeg\jwt\Jwt;
-use sizeg\jwt\JwtHttpBearerAuth;
-use app\components\security\Scope;
 
 class AdminController extends BaseController {
-
-    const SCOPE_ADMIN = 'admin';
 
     public function init() {
         parent::init();

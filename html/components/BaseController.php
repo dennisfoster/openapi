@@ -12,11 +12,14 @@ use Yii;
 use \yii\rest\Controller;
 use sizeg\jwt\Jwt;
 use sizeg\jwt\JwtHttpBearerAuth;
-use app\components\security\Scope;
+use app\components\security\Token;
 
 class BaseController extends Controller {
 
+    const SCOPE_ADMIN = 'admin';
+
     protected $_scope;
+    protected $_organization;
 
     public function behaviors() {
     $behaviors = parent::behaviors();
@@ -41,7 +44,8 @@ class BaseController extends Controller {
             if ($token === null) {
                 return null;
             }
-            $this->_scope = Scope::load($token);            
+            $this->_scope = Token::getScope($token);
+            $this->_organization = Token::getOrganization($token);            
         }
     }
 

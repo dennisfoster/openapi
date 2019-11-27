@@ -12,6 +12,7 @@ use Yii;
 use app\models\RequestDocument;
 use \yii\data\ActiveDataProvider;
 use app\components\BaseController;
+use app\models\Request;
 
 class DocumentController extends BaseController {
 

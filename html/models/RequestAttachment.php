@@ -78,6 +78,10 @@ class RequestAttachment extends \yii\db\ActiveRecord implements Linkable
 		];
 	}
 
+    public function getRequest() {
+		return $this->hasOne(Request::className(), ['requestID' => 'requestID']);
+	}
+
     public function getLinks() {
         return [
             Link::REL_SELF => Url::to(['attachment/view', 'id' => $this->requestAttachmentID], true),

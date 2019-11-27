@@ -125,6 +125,7 @@ class JWT
         return $payload;
     }
 
+
     /**
      * Converts and signs a PHP object or array into a JWT string.
      *
