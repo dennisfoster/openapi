@@ -12,6 +12,9 @@ return [
     'rules' => [
         '/' => 'site/index',
 
+        /* Healthcheck route */
+        'GET healthcheck' => 'healthcheck/index',
+
         /* Packages */
         'GET package' => 'package/index',
         'GET package/default' => 'site/placeholder',

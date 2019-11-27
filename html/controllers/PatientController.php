@@ -9,25 +9,11 @@
 namespace app\controllers;
 
 use Yii;
-use \yii\rest\Controller;
 use app\models\Patient;
 use \yii\data\ActiveDataProvider;
-use sizeg\jwt\Jwt;
-use sizeg\jwt\JwtHttpBearerAuth;
+use app\components\BaseController;
 
-class PatientController extends Controller {
-
-    public function behaviors() {
-    $behaviors = parent::behaviors();
-    $behaviors['authenticator'] = [
-        'class' => JwtHttpBearerAuth::class,
-        'optional' => [
-            'login',
-        ],
-    ];
-
-    return $behaviors;
-    }
+class PatientController extends BaseController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
