@@ -23,6 +23,9 @@ class OrganizationController extends BaseController {
     public function actionIndex() {
 		try {
 			$query = Organization::find();
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->where(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,78 +40,15 @@ class OrganizationController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = Organization::find()->where(['organizationID' => $id])->one();
+			$query = Organization::find()->where(['organizationID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 405;
 			return null;
 		}
-        return $response;
+        return $query->one();
 	}
 
-    public function actionUpdate($id, $key, $value) {
-		try {
-			$model = Organization::findOne(['organizationID' => $id]);
-            $model->$key = $value;
-            $model->save();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return $model;
-	}
-
-    public function actionDelete($id) {
-		try {
-			$model = Organization::findOne(['organizationID' => $id]);
-            $model->delete();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return null;
-	}
-
-    public function actionCreate() {
-		try {
-            $guid = new Guid;
-			$request = Yii::$app->request;
-            $model = new Organization([
-                'organizationGUID' => $guid->generateGuid(),
-                'name' => $request->getBodyParam('name'),
-                'address' => $request->getBodyParam('address'),
-                'subPremises' => $request->getBodyParam('subpremises'),
-                'city' => $request->getBodyParam('city'),
-                'state' => $request->getBodyParam('state'),
-                'zip' => $request->getBodyParam('zip')
-            ]);
-            $model->save();
-		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
-			return null;
-		}
-        return $model;
-	}
-
-    public function actionSearch() {
-        try {
-            $search = '%' . trim(Yii::$app->request->get('search')) . '%';
-            $sql = 'SELECT * FROM organization WHERE
-                name LIKE :search OR
-                address LIKE :search OR
-                subPremises LIKE :search OR
-                city LIKE :search OR
-                state LIKE :search OR
-                zip LIKE :search';
-            $query = Organization::findBySql($sql, [':search' => $search]);
-        } catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 500;
-            return null;
-        }
-        return new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'defaultPageSize' => 10,
-            ]
-        ]);
-    }
 }

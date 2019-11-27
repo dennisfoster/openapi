@@ -23,6 +23,9 @@ class UserController extends BaseController {
     public function actionIndex() {
 		try {
 			$query = User::find();
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->where(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,22 +40,29 @@ class UserController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = User::find()->where(['userID' => $id])->one();
+			$query = User::find()->where(['userID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $response;
+        return $query->one();
 	}
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$model = User::findOne(['userID' => $id]);
+			$query = User::find()->where(['userID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
+            $model = $query->one();
             $model->$key = $value;
             $model->updatedOn = time();
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $model;
@@ -60,10 +70,14 @@ class UserController extends BaseController {
 
     public function actionDelete($id) {
 		try {
-			$model = User::findOne(['userID' => $id]);
+			$query = User::find()->where(['userID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
+            $model = $query->one();
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return null;
@@ -102,13 +116,16 @@ class UserController extends BaseController {
         try {
             $search = '%' . trim(Yii::$app->request->get('search')) . '%';
             $sql = 'SELECT * FROM user WHERE
-                lastName LIKE :search OR
+                (lastName LIKE :search OR
                 firstName LIKE :search OR
                 email LIKE :search OR
                 directLine LIKE :search OR
                 directExtension LIKE :search OR
                 cellphone LIKE :search OR
-                phone LIKE :search';
+                phone LIKE :search)';
+                if ($this->_scope != self::SCOPE_ADMIN) {
+                    $sql .= ' AND organizationID = ' . $this->_organization;
+                }
             $query = User::findBySql($sql, [':search' => $search]);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;

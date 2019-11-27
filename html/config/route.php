@@ -18,11 +18,13 @@ return [
         /* Packages */
         'GET package' => 'package/index',
         'GET package/default' => 'site/placeholder',
-        'POST package' => 'package/create',
         'GET package/search' => 'package/search',
         'GET package/<id:\d+>' => 'package/view',
-        'DELETE package/<id:\d+>' => 'package/delete',
-        'PATCH package/<id:\d+>/<key>/<value>' => 'package/update',
+
+        /* Packages (admin) */
+        'POST package' => 'packageadmin/create',
+        'DELETE package/<id:\d+>' => 'packageadmin/delete',
+        'PATCH package/<id:\d+>/<key>/<value>' => 'packageadmin/update',
 
         /* Requests */
         'GET request' => 'request/index',
@@ -31,35 +33,39 @@ return [
         'GET request/default' => 'site/placeholder',
         'GET request/attachment/<id:\d+>' => 'attachment/view',
         'GET request/document/<id:\d+>' => 'document/view',
-        'GET request/document/<id:\d+>/download' => 'document/download',        
+        'GET request/document/<id:\d+>/download' => 'document/download',
         'GET request/<id:\d+>' => 'request/view',
         'PATCH request/<id:\d+>/<key>/<value>' => 'request/update',
         'POST request/<id:\d+>/attachment' => 'attachment/create',
 
         /* Organizations */
         'GET organization' => 'organization/index',
-        'POST organization' => 'organization/create',
-        'GET organization/default' => 'site/placeholder',
-        'GET organization/search' => 'organization/search',
         'GET organization/<id:\d+>' => 'organization/view',
-        'PATCH organization/<id:\d+>/<key>/<value>' => 'organization/update',
-        'DELETE organization/<id>' => 'organization/delete',
+
+        /* Organizations (admin) */
+        'POST organization' => 'organizationadmin/create',
+        'GET organization/default' => 'site/placeholder',
+        'GET organization/search' => 'organizationadmin/search',
+        'PATCH organization/<id:\d+>/<key>/<value>' => 'organizationadmin/update',
+        'DELETE organization/<id>' => 'organizationadmin/delete',
 
         /* Users */
         'GET user' => 'user/index',
+        'GET user/<id:\d+>' => 'user/view',
+        'GET user/search' => 'user/search',
         'POST user' => 'user/create',
         'GET user/default' => 'site/placeholder',
-        'GET user/search' => 'user/search',
-        'GET user/<id:\d+>' => 'user/view',
         'DELETE user/<id:\d+>' => 'user/delete',
         'PATCH user/<id:\d+>/<key>/<value>' => 'user/update',
 
         /* Patients */
         'GET patient' => 'patient/index',
-        'POST patient' => 'patient/create',
-        'GET patient/default' => 'site/placeholder',
         'GET patient/search' => 'patient/search',
         'GET patient/<id:\d+>' => 'patient/view',
+
+        /* Patients (admin) */
+        'POST patient' => 'patient/create',
+        'GET patient/default' => 'site/placeholder',
         'DELETE patient/<id:\d+>' => 'patient/delete',
         'PATCH patient/<id:\d+>/<key>/<value>' => 'patient/update',
 

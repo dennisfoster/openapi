@@ -23,6 +23,9 @@ class RequestController extends BaseController {
     public function actionIndex() {
 		try {
 			$query = Request::find();
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->where(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
 			return null;
@@ -37,22 +40,29 @@ class RequestController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = Request::find()->where(['requestID' => $id])->one();
+			$query = Request::find()->where(['requestID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $response;
+        return $query->one();
 	}
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$model = Request::findOne(['requestID' => $id]);
+			$query = Request::find()->where(['requestID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->andWhere(['organizationID' => $this->_organization]);
+            }
+            $model = $query->one();
             $model->$key = $value;
             $model->_updatedAt = time();
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $model;
