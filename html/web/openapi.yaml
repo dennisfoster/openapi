@@ -74,7 +74,7 @@ paths:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /package/default:
     get:
@@ -143,7 +143,7 @@ paths:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
     delete:
       tags:
@@ -162,7 +162,7 @@ paths:
           description: Successful operation
           content: {}
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /package/{id}/{key}/{value}:
     patch:
@@ -199,7 +199,7 @@ paths:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /request:
     get:
@@ -298,7 +298,7 @@ paths:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /request/search:
     get:
@@ -401,7 +401,7 @@ paths:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /request/attachment/{id}:
     get:
@@ -450,7 +450,7 @@ paths:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /request/document/{id}:
     get:
@@ -553,7 +553,7 @@ paths:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /organization/default:
     get:
@@ -672,7 +672,7 @@ paths:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /user:
     get:
@@ -734,7 +734,7 @@ paths:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /user/default:
     get:
@@ -853,7 +853,7 @@ paths:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /patient:
     get:
@@ -923,7 +923,7 @@ paths:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /patient/default:
     get:
@@ -1042,7 +1042,7 @@ paths:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
         '400':
-          description: Invalid input
+          description: Bad Request
           content: {}
   /healthcheck:
     get:
