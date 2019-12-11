@@ -23,8 +23,11 @@ class DocumentController extends BaseController {
 
     public function actionDownload($id) {
 		try {
-            $document = (object) RequestDocument::find()->where(['reportID' => $id])->one()->toArray();
-
+            $query = RequestDocument::find()->where(['reportID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->joinWith('request')->where(['organizationID' => $this->_organization]);
+            }
+            $document = (object) $query->one()->toArray();
 			if (empty($document->name)) {
 				$document->name = 'AccuMed_Attachment_' . date('Ymd_Hia');
 			}
@@ -47,7 +50,11 @@ class DocumentController extends BaseController {
 
     public function actionView($id) {
 		try {
-			$response = RequestDocument::find()->where(['reportID' => $id])->one();
+            $query = RequestDocument::find()->where(['reportID' => $id]);
+            if ($this->_scope != self::SCOPE_ADMIN) {
+                $query = $query->joinWith('request')->where(['organizationID' => $this->_organization]);
+            }
+			$response = $query->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 400;
 			return null;
