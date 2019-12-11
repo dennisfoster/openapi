@@ -211,7 +211,7 @@ class Request extends \yii\db\ActiveRecord implements Linkable
 
     public function getLinks() {
         return [
-            Link::REL_SELF => Url::to(['requests/view', 'id' => $this->requestID], true),
+            Link::REL_SELF => Url::to(['request/view', 'id' => $this->requestID], true),
         ];
     }
 
