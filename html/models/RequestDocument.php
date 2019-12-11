@@ -63,7 +63,7 @@ class RequestDocument extends \yii\db\ActiveRecord implements Linkable {
 		];
 	}
 
-	public function getRequest() {
+	public function getRequestIntranet() {
 		return $this->hasOne(RequestIntranet::className(), ['requestID' => 'requestID']);
 	}
 
@@ -71,9 +71,13 @@ class RequestDocument extends \yii\db\ActiveRecord implements Linkable {
 		return $this->hasOne(TypeDocument::className(), ['typeDocumentID' => 'typeDocumentID']);
 	}
 
+    public function getRequest() {
+        return $this->hasOne(Request::className(), ['requestGUID' => 'requestGUID'])->via('requestIntranet');
+    }
+
 	public static function getPublishedDocumentsByRequestGUID($requestGUID) {
 		$query = self::find()
-			->joinWith('request')
+			->joinWith('requestIntranet')
 			->with('type')
 			->where(['request.requestGUID' => $requestGUID, 'isPublished' => 1, 'isDeleted' => 0])
 			->orderBy('report._createdAt desc')
