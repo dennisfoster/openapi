@@ -52,7 +52,7 @@ class DocumentController extends BaseController {
 		try {
             $query = RequestDocument::find()->where(['reportID' => $id]);
             if ($this->_scope != self::SCOPE_ADMIN) {
-                $query = $query->joinWith('request')->where(['organizationID' => $this->_organization]);
+                $query = $query->joinWith('request')->where(['access.organizationID' => $this->_organization]);
             }
 			$response = $query->one();
 		} catch (\Exception $ex) {
