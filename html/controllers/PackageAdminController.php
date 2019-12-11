@@ -17,7 +17,7 @@ class PackageAdminController extends AdminController {
     public function actionCreate() {
 		try {
 			$request = Yii::$app->request;
-            $packagesModel = new Package([
+            $model = new Package([
                 'parentPackageID' => $request->getBodyParam('parentPackageID'),
                 'packageTypeID' => $request->getBodyParam('packageTypeID'),
                 'bodyPartID' => $request->getBodyParam('bodyPartID'),
@@ -36,22 +36,22 @@ class PackageAdminController extends AdminController {
                 '_created' => time(),
                 '_updated' => time(),
             ]);
-            $packagesModel->save();
+            $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $packagesModel;
+        return $model;
 	}
 
     public function actionDelete($id) {
 
 		try {
-			$packagesModel = Package::findOne(['packageID' => $id]);
-            if (!$packagesModel) {
+			$model = Package::findOne(['packageID' => $id]);
+            if (!$model) {
                 throw new \Exception;
             }
-            $packagesModel->delete();
+            $model->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 400;
 			return null;
@@ -61,15 +61,15 @@ class PackageAdminController extends AdminController {
 
     public function actionUpdate($id, $key, $value) {
 		try {
-			$packagesModel = Package::findOne(['packageID' => $id]);
-            $packagesModel->$key = $value;
-            $packagesModel->_updated = time();
-            $packagesModel->save();
+			$model = Package::findOne(['packageID' => $id]);
+            $model->$key = $value;
+            $model->_updated = time();
+            $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $packagesModel;
+        return $model;
 	}
 
 }
