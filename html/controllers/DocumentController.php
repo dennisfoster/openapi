@@ -32,7 +32,7 @@ class DocumentController extends BaseController {
 			$documentName = str_replace('/tmp/', '', $document->link);
 			$tempFile = Yii::$app->amazon->getObject($documentName);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
 
@@ -49,7 +49,7 @@ class DocumentController extends BaseController {
 		try {
 			$response = RequestDocument::find()->where(['reportID' => $id])->one();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $response;

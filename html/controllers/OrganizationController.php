@@ -45,7 +45,7 @@ class OrganizationController extends BaseController {
                 $query = $query->andWhere(['organizationID' => $this->_organization]);
             }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $query->one();
