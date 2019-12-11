@@ -106,7 +106,7 @@ class UserController extends BaseController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->statusCode = 400;
 			return null;
 		}
         return $model;
