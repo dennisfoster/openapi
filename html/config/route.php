@@ -13,11 +13,13 @@ return [
         '/' => 'site/index',
 
         /* Healthcheck route */
-        'GET healthcheck' => 'healthcheck/index',
+        'GET healthcheck:\w+>' => 'healthcheck/index',
 
         /* Packages */
+        'GET package/page/<page:\d+>' => 'package/index',
         'GET package' => 'package/index',
         'GET package/default' => 'site/placeholder',
+        'GET package/search/page/<page:\d+>' => 'package/search',
         'GET package/search' => 'package/search',
         'GET package/<id:\d+>' => 'package/view',
 
@@ -27,8 +29,10 @@ return [
         'PATCH package/<id:\d+>/<key>/<value>' => 'packageadmin/update',
 
         /* Requests */
+        'GET request/page/<page:\d+>' => 'request/index',
         'GET request' => 'request/index',
         'POST request' => 'site/placeholder',
+        'GET request/search/page/<page:\d+>' => 'request/search',
         'GET request/search' => 'site/placeholder',
         'GET request/default' => 'site/placeholder',
         'GET request/attachment/<id:\d+>' => 'attachment/view',
@@ -39,19 +43,23 @@ return [
         'POST request/<id:\d+>/attachment' => 'attachment/create',
 
         /* Organizations */
+        'GET organization/page/<page:\d+>' => 'organization/index',
         'GET organization' => 'organization/index',
         'GET organization/<id:\d+>' => 'organization/view',
 
         /* Organizations (admin) */
         'POST organization' => 'organizationadmin/create',
         'GET organization/default' => 'site/placeholder',
+        'GET organization/search/page/<page:\d+>' => 'organization/search',
         'GET organization/search' => 'organizationadmin/search',
         'PATCH organization/<id:\d+>/<key>/<value>' => 'organizationadmin/update',
         'DELETE organization/<id>' => 'organizationadmin/delete',
 
         /* Users */
+        'GET user/page/<page:\d+>' => 'user/index',
         'GET user' => 'user/index',
         'GET user/<id:\d+>' => 'user/view',
+        'GET user/search/page/<page:\d+>' => 'user/search',
         'GET user/search' => 'user/search',
         'POST user' => 'user/create',
         'GET user/default' => 'site/placeholder',
@@ -59,7 +67,9 @@ return [
         'PATCH user/<id:\d+>/<key>/<value>' => 'user/update',
 
         /* Patients */
+        'GET patient/page/<page:\d+>' => 'patient/index',
         'GET patient' => 'patient/index',
+        'GET patient/search/page/<page:\d+>' => 'patient/search',        
         'GET patient/search' => 'patient/search',
         'GET patient/<id:\d+>' => 'patient/view',
 

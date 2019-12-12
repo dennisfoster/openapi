@@ -45,7 +45,7 @@ class BaseController extends Controller {
                 return null;
             }
             $this->_scope = Token::getScope($token);
-            $this->_organization = Token::getOrganization($token);            
+            $this->_organization = Token::getOrganization($token);
         }
     }
 
