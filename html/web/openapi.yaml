@@ -36,6 +36,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
     post:
       tags:
       - Package
@@ -65,7 +67,7 @@ paths:
                   type: integer
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -73,9 +75,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /package/default:
     get:
       tags:
@@ -120,6 +119,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
   /package/{id}:
     get:
       tags:
@@ -142,9 +143,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
+        '204':
+          description: No results found
     delete:
       tags:
       - Package
@@ -160,9 +160,6 @@ paths:
       responses:
         '200':
           description: Successful operation
-          content: {}
-        '400':
-          description: Bad Request
           content: {}
   /package/{id}/{key}/{value}:
     patch:
@@ -198,9 +195,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /request:
     get:
       tags:
@@ -225,6 +219,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
     post:
       tags:
       - Request
@@ -289,7 +285,7 @@ paths:
                         $ref: '#/components/schemas/Document'
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -297,9 +293,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /request/search:
     get:
       tags:
@@ -331,6 +324,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
   /request/{id}:
     get:
       tags:
@@ -353,6 +348,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
   /request/default:
     get:
       tags:
@@ -400,9 +397,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /request/attachment/{id}:
     get:
       tags:
@@ -425,6 +419,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
     post:
       tags:
       - Request
@@ -441,7 +437,7 @@ paths:
                   description: file to upload
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -449,9 +445,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /request/document/{id}:
     get:
       tags:
@@ -474,6 +467,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Document'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
   /request/document/{id}/download:
     get:
       tags:
@@ -495,6 +490,8 @@ paths:
               schema:
                 type: string
                 format: binary
+        '204':
+          description: No results found
   /organization:
     get:
       tags:
@@ -544,7 +541,7 @@ paths:
                   type: string
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -552,9 +549,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /organization/default:
     get:
       tags:
@@ -599,6 +593,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
   /organization/{id}:
     get:
       tags:
@@ -621,6 +617,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
     delete:
       tags:
       - Organization
@@ -671,9 +669,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /user:
     get:
       tags:
@@ -698,6 +693,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
     post:
       tags:
       - User
@@ -725,7 +722,7 @@ paths:
                   type: string
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -733,9 +730,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /user/default:
     get:
       tags:
@@ -780,6 +774,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
   /user/{id}:
     get:
       tags:
@@ -802,6 +798,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
     delete:
       tags:
       - User
@@ -852,9 +850,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /patient:
     get:
       tags:
@@ -879,6 +874,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
     post:
       tags:
       - Patient
@@ -914,7 +911,7 @@ paths:
                   type: string
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -922,7 +919,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-        '400':
+        '500':
           description: Bad Request
           content: {}
   /patient/default:
@@ -969,6 +966,8 @@ paths:
                     $ref: '#/components/schemas/PageLink'
                   _meta:
                     $ref: '#/components/schemas/Meta'
+        '204':
+          description: No results found
   /patient/{id}:
     get:
       tags:
@@ -991,6 +990,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
+        '204':
+          description: No results found
     delete:
       tags:
       - Patient
@@ -1041,9 +1042,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-        '400':
-          description: Bad Request
-          content: {}
   /healthcheck:
     get:
       tags:
