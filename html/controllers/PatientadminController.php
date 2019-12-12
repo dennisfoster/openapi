@@ -13,7 +13,7 @@ use app\models\Patient;
 use \yii\data\ActiveDataProvider;
 use app\components\BaseController;
 
-class PatientController extends BaseController {
+class PatientadminController extends BaseController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -26,7 +26,7 @@ class PatientController extends BaseController {
             $model->$key = $value;
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;
@@ -37,7 +37,7 @@ class PatientController extends BaseController {
 			$model = Patient::findOne(['patientID' => $id]);
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return null;
@@ -63,9 +63,10 @@ class PatientController extends BaseController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;        
         return $model;
 	}
 }

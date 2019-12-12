@@ -16,7 +16,7 @@ class AdminController extends BaseController {
         parent::init();
 
         if ($this->_scope != self::SCOPE_ADMIN) {
-            Yii::$app->response->statusCode = 403;
+            Yii::$app->response->statusCode = 405;
             Yii::$app->end();
         }
     }

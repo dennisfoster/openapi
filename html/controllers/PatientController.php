@@ -30,12 +30,17 @@ class PatientController extends BaseController {
             Yii::$app->response->statusCode = 500;
 			return null;
 		}
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
 	}
 
     public function actionView($id) {
@@ -45,9 +50,13 @@ class PatientController extends BaseController {
                 $query = $query->andWhere(['organizationID' => $this->_organization]);
             }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        if (!$query->one()) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
         return $query->one();
 	}
 
@@ -71,11 +80,16 @@ class PatientController extends BaseController {
             Yii::$app->response->statusCode = 500;
             return null;
         }
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
     }
 }
