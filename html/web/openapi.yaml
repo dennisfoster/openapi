@@ -10,17 +10,16 @@ tags:
   - name: Organization
   - name: User
   - name: Patient
-  - name: Healthcheck
 paths:
   /package:
     get:
       tags:
       - Package
-      summary: Get all packages
+      summary: Get list of all packages
       operationId: getPackage
       responses:
         '200':
-          description: Successful operation
+          description: Packages found
           content:
             application/json:
               schema:
@@ -37,7 +36,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No packages found
     post:
       tags:
       - Package
@@ -45,7 +44,7 @@ paths:
       operationId: createPackage
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -68,26 +67,26 @@ paths:
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: Package created
           content:
             application/json:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
-  /package/default:
-    get:
-      tags:
-      - Package
-      summary: Get default package
-      operationId: getDefaultPackage
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Package'
+  # /package/default:
+  #   get:
+  #     tags:
+  #     - Package
+  #     summary: Get default package
+  #     operationId: getDefaultPackage
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Package'
   /package/search:
     get:
       tags:
@@ -103,7 +102,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Packages found
           content:
             application/json:
               schema:
@@ -120,7 +119,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No packages found
   /package/{id}:
     get:
       tags:
@@ -130,13 +129,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of package
+        description: package ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Package found
           content:
             application/json:
               schema:
@@ -144,7 +143,7 @@ paths:
                   - $ref: '#/components/schemas/Package'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No packages found
     delete:
       tags:
       - Package
@@ -153,14 +152,19 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of package
+        description: package ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
-          content: {}
+          description: Package deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Package deleted
   /package/{id}/{key}/{value}:
     patch:
       tags:
@@ -170,7 +174,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of package
+        description: package ID
         required: true
         schema:
           type: string
@@ -188,7 +192,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Package updated
           content:
             application/json:
               schema:
@@ -199,11 +203,11 @@ paths:
     get:
       tags:
       - Request
-      summary: Get all requests
+      summary: Get list of all requests
       operationId: getRequest
       responses:
         '200':
-          description: Successful operation
+          description: Requests found
           content:
             application/json:
               schema:
@@ -220,7 +224,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No requests found
     post:
       tags:
       - Request
@@ -228,7 +232,7 @@ paths:
       operationId: createRequest
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -286,7 +290,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: Request created
           content:
             application/json:
               schema:
@@ -308,7 +312,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Requests found
           content:
             application/json:
               schema:
@@ -325,7 +329,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No requests found
   /request/{id}:
     get:
       tags:
@@ -335,13 +339,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of request
+        description: request ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Request found
           content:
             application/json:
               schema:
@@ -349,70 +353,70 @@ paths:
                   - $ref: '#/components/schemas/Request'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
-  /request/default:
-    get:
-      tags:
-      - Request
-      summary: Get default request
-      operationId: getDefaultRequest
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Request'
-  /request/{id}/{key}/{value}:
-    patch:
-      tags:
-      - Request
-      summary: Update request
-      operationId: updateRequest
-      parameters:
-      - name: id
-        in: path
-        description: ID of request
-        required: true
-        schema:
-          type: string
-      - name: key
-        in: path
-        description: Property name
-        required: true
-        schema:
-          type: string
-      - name: value
-        in: path
-        description: Property value
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/Request'
-                  - $ref: '#/components/schemas/Link'
+          description: No requests found
+  # /request/default:
+  #   get:
+  #     tags:
+  #     - Request
+  #     summary: Get default request
+  #     operationId: getDefaultRequest
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Request'
+  # /request/{id}/{key}/{value}:
+  #   patch:
+  #     tags:
+  #     - Request
+  #     summary: Update request
+  #     operationId: updateRequest
+  #     parameters:
+  #     - name: id
+  #       in: path
+  #       description: request ID
+  #       required: true
+  #       schema:
+  #         type: string
+  #     - name: key
+  #       in: path
+  #       description: Property name
+  #       required: true
+  #       schema:
+  #         type: string
+  #     - name: value
+  #       in: path
+  #       description: Property value
+  #       required: true
+  #       schema:
+  #         type: string
+  #     responses:
+  #       '200':
+  #         description: Request updated
+  #         content:
+  #           application/json:
+  #             schema:
+  #               allOf:
+  #                 - $ref: '#/components/schemas/Request'
+  #                 - $ref: '#/components/schemas/Link'
   /request/attachment/{id}:
     get:
       tags:
       - Request
-      summary: Get request attachment by ID
+      summary: Get request attachment by attachment ID
       operationId: getRequestAttachmentByID
       parameters:
       - name: id
         in: path
-        description: ID of request attachment
+        description: request attachment ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Attachment found
           content:
             application/json:
               schema:
@@ -420,25 +424,25 @@ paths:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No attachments found
     post:
       tags:
       - Request
-      summary: Create new request attachment
+      summary: Upload new request attachment
       operationId: createRequestAttachment
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
                 upload:
                   type: string
-                  description: file to upload
+                  description: attachment file to upload
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: Attachment created
           content:
             application/json:
               schema:
@@ -454,13 +458,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of request document
+        description: request document ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Document found
           content:
             application/json:
               schema:
@@ -468,7 +472,7 @@ paths:
                   - $ref: '#/components/schemas/Document'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No documents found
   /request/document/{id}/download:
     get:
       tags:
@@ -478,29 +482,29 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of request document
+        description: request document ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Document found
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
         '204':
-          description: No results found
+          description: No documents found
   /organization:
     get:
       tags:
       - Organization
-      summary: Get all organizations
+      summary: Get list of all organizations
       operationId: getOrganization
       responses:
         '200':
-          description: Successful operation
+          description: Organizations found
           content:
             application/json:
               schema:
@@ -523,7 +527,7 @@ paths:
       operationId: createOrganizations
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -542,26 +546,26 @@ paths:
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: Organization created
           content:
             application/json:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
-  /organization/default:
-    get:
-      tags:
-      - Organization
-      summary: Get default organization
-      operationId: getDefaultOrganization
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
+  # /organization/default:
+  #   get:
+  #     tags:
+  #     - Organization
+  #     summary: Get default organization
+  #     operationId: getDefaultOrganization
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Organization'
   /organization/search:
     get:
       tags:
@@ -577,7 +581,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Organizations found
           content:
             application/json:
               schema:
@@ -594,7 +598,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No organizations found
   /organization/{id}:
     get:
       tags:
@@ -604,13 +608,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of organization
+        description: organization ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Organization found
           content:
             application/json:
               schema:
@@ -618,7 +622,7 @@ paths:
                   - $ref: '#/components/schemas/Organization'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No organizations found
     delete:
       tags:
       - Organization
@@ -627,14 +631,19 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of organization
+        description: organization ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
-          content: {}
+          description: Organization deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Organization deleted
   /organization/{id}/{key}/{value}:
     patch:
       tags:
@@ -644,7 +653,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of organization
+        description: organization ID
         required: true
         schema:
           type: string
@@ -662,7 +671,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Organization updated
           content:
             application/json:
               schema:
@@ -673,11 +682,11 @@ paths:
     get:
       tags:
       - User
-      summary: Get all users
+      summary: Get list of all users
       operationId: getUser
       responses:
         '200':
-          description: Successful operation
+          description: Users found
           content:
             application/json:
               schema:
@@ -694,7 +703,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No users found
     post:
       tags:
       - User
@@ -702,7 +711,7 @@ paths:
       operationId: createUser
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -723,26 +732,26 @@ paths:
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: User created
           content:
             application/json:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
-  /user/default:
-    get:
-      tags:
-      - User
-      summary: Get default user
-      operationId: getDefaultUser
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
+  # /user/default:
+  #   get:
+  #     tags:
+  #     - User
+  #     summary: Get default user
+  #     operationId: getDefaultUser
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/User'
   /user/search:
     get:
       tags:
@@ -758,7 +767,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Users found
           content:
             application/json:
               schema:
@@ -775,7 +784,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No users found
   /user/{id}:
     get:
       tags:
@@ -785,13 +794,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of user
+        description: user ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: User found
           content:
             application/json:
               schema:
@@ -799,23 +808,28 @@ paths:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No users found
     delete:
       tags:
       - User
-      summary: Delete user by ID
+      summary: Remove user from current organization by ID
       operationId: deleteUserByID
       parameters:
       - name: id
         in: path
-        description: ID of user
+        description: user ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
-          content: {}
+          description: User removed from current organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: User removed from your organization
   /user/{id}/{key}/{value}:
     patch:
       tags:
@@ -825,7 +839,7 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of user
+        description: user ID
         required: true
         schema:
           type: string
@@ -843,7 +857,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: User updated
           content:
             application/json:
               schema:
@@ -854,11 +868,11 @@ paths:
     get:
       tags:
       - Patient
-      summary: Get all patients
+      summary: Get list of all patients
       operationId: getPatient
       responses:
         '200':
-          description: Successful operation
+          description: Patients found
           content:
             application/json:
               schema:
@@ -875,7 +889,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No patients found
     post:
       tags:
       - Patient
@@ -883,7 +897,7 @@ paths:
       operationId: createPatient
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -912,29 +926,26 @@ paths:
         required: true
       responses:
         '201':
-          description: Successful operation
+          description: Patient created
           content:
             application/json:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-        '500':
-          description: Bad Request
-          content: {}
-  /patient/default:
-    get:
-      tags:
-      - Patient
-      summary: Get default patient
-      operationId: getDefaultPatient
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Patient'
+  # /patient/default:
+  #   get:
+  #     tags:
+  #     - Patient
+  #     summary: Get default patient
+  #     operationId: getDefaultPatient
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Patient'
   /patient/search:
     get:
       tags:
@@ -950,7 +961,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Patients found
           content:
             application/json:
               schema:
@@ -967,7 +978,7 @@ paths:
                   _meta:
                     $ref: '#/components/schemas/Meta'
         '204':
-          description: No results found
+          description: No patients found
   /patient/{id}:
     get:
       tags:
@@ -977,13 +988,13 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of patient
+        description: patient ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Patient found
           content:
             application/json:
               schema:
@@ -991,7 +1002,7 @@ paths:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
         '204':
-          description: No results found
+          description: No patients found
     delete:
       tags:
       - Patient
@@ -1000,14 +1011,19 @@ paths:
       parameters:
       - name: id
         in: path
-        description: ID of patient
+        description: patient ID
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Successful operation
-          content: {}
+          description: Patient deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Patient deleted
   /patient/{id}/{key}/{value}:
     patch:
       tags:
@@ -1035,24 +1051,13 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful operation
+          description: Patient updated
           content:
             application/json:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Patient'
                   - $ref: '#/components/schemas/Link'
-  /healthcheck:
-    get:
-      tags:
-      - Healthcheck
-      summary: Healthcheck endpoint
-      operationId: healthcheck
-      responses:
-        '200':
-          description: API is functioning properly
-        '500':
-          description: API healthcheck failed
 components:
   schemas:
     Package:
@@ -1060,40 +1065,58 @@ components:
       properties:
         packageID:
           type: integer
+          example: 744
         parentPackageID:
           type: integer
+          example: 743
         packageTypeID:
           type: integer
+          example: null
         bodyPartID:
           type: integer
+          example: 7
         bodyPartSlug:
           type: integer
+          example: null
         title:
           type: string
+          example: test
         description:
           type: string
+          example: This is a surgical procedure to fuse one level
         totalNationalValue:
           type: integer
+          example: 123456789
         employeeID:
           type: integer
+          example: 29
         isPublished:
           type: integer
+          example: 0
         isStackable:
           type: integer
+          example: null
         isWorkersCompensation:
           type: integer
+          example: 0
         isPersonalInjury:
           type: integer
+          example: 0
         isFlaggedForReview:
           type: integer
+          example: 1
         isExpress:
           type: integer
+          example: null
         isDeleted:
           type: integer
+          example: 0
         _created:
           type: string
+          example: 1561475426
         _updated:
           type: string
+          example: 1561475426
     Request:
       type: object
       properties:
@@ -1471,9 +1494,18 @@ components:
       properties:
         totalCount:
           type: integer
+          example: 145
         pageCount:
           type: integer
+          example: 11
         currentPage:
           type: integer
+          example: 1
         perPage:
           type: integer
+          example: 10                    
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string

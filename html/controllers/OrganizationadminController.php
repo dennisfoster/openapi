@@ -27,7 +27,7 @@ class OrganizationadminController extends AdminController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}
@@ -38,9 +38,9 @@ class OrganizationadminController extends AdminController {
             $model->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        return null;
+        return ['message' => 'Organization deleted'];
 	}
 
     public function actionCreate() {
@@ -59,7 +59,7 @@ class OrganizationadminController extends AdminController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         Yii::$app->response->statusCode = 201;
         return $model;
@@ -78,7 +78,7 @@ class OrganizationadminController extends AdminController {
             $query = Organization::findBySql($sql, [':search' => $search]);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-            return null;
+            return ['message' => 'Internal server error'];
         }
         $response = new ActiveDataProvider([
             'query' => $query,

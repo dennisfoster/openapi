@@ -27,7 +27,7 @@ class PatientadminController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}
@@ -38,9 +38,9 @@ class PatientadminController extends BaseController {
             $model->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        return null;
+        return ['message' => 'Patient deleted'];
 	}
 
     public function actionCreate() {
@@ -64,9 +64,9 @@ class PatientadminController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        Yii::$app->response->statusCode = 201;        
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 }

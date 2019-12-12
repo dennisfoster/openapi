@@ -12,3 +12,7 @@ body {
 .models {
     display: none !important;
 }
+
+.response-col_links {
+    display: none !important;
+}

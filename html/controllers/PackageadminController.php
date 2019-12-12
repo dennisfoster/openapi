@@ -39,7 +39,7 @@ class PackageadminController extends AdminController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         Yii::$app->response->statusCode = 201;
         return $model;
@@ -55,9 +55,9 @@ class PackageadminController extends AdminController {
             $model->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        return null;
+        return ['message' => 'Package deleted'];
 	}
 
     public function actionUpdate($id, $key, $value) {
@@ -68,7 +68,7 @@ class PackageadminController extends AdminController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}

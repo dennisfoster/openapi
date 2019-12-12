@@ -25,7 +25,7 @@ class PackageController extends BaseController {
 			$query = Package::find()->where(['isPublished' => '0']);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
 
         $response = new ActiveDataProvider([
@@ -66,7 +66,7 @@ class PackageController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         Yii::$app->response->statusCode = 201;
         return $model;
@@ -77,7 +77,7 @@ class PackageController extends BaseController {
 			$response = Package::findOne(['packageID' => $id]);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         if (!$response) {
             Yii::$app->response->statusCode = 204;
@@ -96,9 +96,9 @@ class PackageController extends BaseController {
             $model->delete();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        return null;
+        return ['message' => 'Package deleted'];
 	}
 
     public function actionUpdate($id, $key, $value) {
@@ -109,7 +109,7 @@ class PackageController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}
@@ -120,7 +120,7 @@ class PackageController extends BaseController {
             $query = Package::search($terms);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         $response = new ActiveDataProvider([
             'query' => $query,

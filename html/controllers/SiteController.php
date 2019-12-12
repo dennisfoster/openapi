@@ -17,13 +17,13 @@ class SiteController extends \yii\web\Controller {
             return $this->renderFile('@app/web/openapi.html');
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
     }
 
     public function actionPlaceholder() {
         Yii::$app->response->statusCode = 501;
-		return null;
+        return ['message' => 'Endpoint not implemented yet'];
     }
 
 }
