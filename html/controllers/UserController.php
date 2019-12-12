@@ -30,12 +30,17 @@ class UserController extends BaseController {
             Yii::$app->response->statusCode = 500;
 			return null;
 		}
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
 	}
 
     public function actionView($id) {
@@ -45,9 +50,13 @@ class UserController extends BaseController {
                 $query = $query->andWhere(['organizationID' => $this->_organization]);
             }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        if (!$query->one()) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
         return $query->one();
 	}
 
@@ -62,7 +71,7 @@ class UserController extends BaseController {
             $model->updatedOn = time();
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;
@@ -77,7 +86,7 @@ class UserController extends BaseController {
             $model = $query->one();
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return null;
@@ -106,9 +115,10 @@ class UserController extends BaseController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 
@@ -131,11 +141,16 @@ class UserController extends BaseController {
             Yii::$app->response->statusCode = 500;
             return null;
         }
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
     }
 }

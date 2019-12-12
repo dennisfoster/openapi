@@ -28,12 +28,17 @@ class PackageController extends BaseController {
 			return null;
 		}
 
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
 	}
 
     public function actionCreate() {
@@ -60,9 +65,10 @@ class PackageController extends BaseController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 
@@ -70,9 +76,13 @@ class PackageController extends BaseController {
 		try {
 			$response = Package::findOne(['packageID' => $id]);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        if (!$response) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
         return $response;
 	}
 
@@ -85,7 +95,7 @@ class PackageController extends BaseController {
             }
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return null;
@@ -98,7 +108,7 @@ class PackageController extends BaseController {
             $model->_updated = time();
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;
@@ -109,15 +119,19 @@ class PackageController extends BaseController {
             $terms = trim(Yii::$app->request->get('search'));
             $query = Package::search($terms);
         } catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
-        // return $query;
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
     }
 }

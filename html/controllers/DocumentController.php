@@ -25,7 +25,7 @@ class DocumentController extends BaseController {
         try {
             $model = RequestDocument::find()->joinWith('requestIntranet')->where(['reportID' => $id])->one();
             if ($this->_scope != self::SCOPE_ADMIN && $model->request->organizationID != $this->_organization) {
-                Yii::$app->response->statusCode = 400;
+                Yii::$app->response->statusCode = 204;
     			return null;
             }
             $document = (object) $model->toArray();
@@ -36,7 +36,7 @@ class DocumentController extends BaseController {
 			$documentName = str_replace('/tmp/', '', $document->link);
 			$tempFile = Yii::$app->amazon->getObject($documentName);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
 
@@ -53,11 +53,11 @@ class DocumentController extends BaseController {
 		try {
             $model = RequestDocument::find()->joinWith('requestIntranet')->where(['reportID' => $id])->one();
             if ($this->_scope != self::SCOPE_ADMIN and $model->request->organizationID != $this->_organization) {
-                Yii::$app->response->statusCode = 400;
+                Yii::$app->response->statusCode = 204;
     			return null;
             }
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;

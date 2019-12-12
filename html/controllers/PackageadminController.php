@@ -12,7 +12,7 @@ use Yii;
 use app\models\Package;
 use app\components\AdminController;
 
-class PackageAdminController extends AdminController {
+class PackageadminController extends AdminController {
 
     public function actionCreate() {
 		try {
@@ -38,9 +38,10 @@ class PackageAdminController extends AdminController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 
@@ -53,7 +54,7 @@ class PackageAdminController extends AdminController {
             }
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return null;
@@ -66,7 +67,7 @@ class PackageAdminController extends AdminController {
             $model->_updated = time();
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;

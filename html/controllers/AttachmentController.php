@@ -68,6 +68,7 @@ class AttachmentController extends BaseController {
             Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 
@@ -79,9 +80,12 @@ class AttachmentController extends BaseController {
             }
             $query = $query->andWhere(['requestAttachmentID' => $id]);
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        if (is_null($query->one())) {
+            Yii::$app->response->statusCode = 204;
+        }
         return $query->one();
 	}
 

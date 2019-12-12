@@ -13,7 +13,7 @@ use app\models\Organization;
 use \yii\data\ActiveDataProvider;
 use app\components\AdminController;
 
-class OrganizationController extends AdminController {
+class OrganizationadminController extends AdminController {
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -26,7 +26,7 @@ class OrganizationController extends AdminController {
             $model->$key = $value;
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return $model;
@@ -37,7 +37,7 @@ class OrganizationController extends AdminController {
 			$model = Organization::findOne(['organizationID' => $id]);
             $model->delete();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
         return null;
@@ -58,9 +58,10 @@ class OrganizationController extends AdminController {
             ]);
             $model->save();
 		} catch (\Exception $ex) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 500;
 			return null;
 		}
+        Yii::$app->response->statusCode = 201;
         return $model;
 	}
 
@@ -79,11 +80,16 @@ class OrganizationController extends AdminController {
             Yii::$app->response->statusCode = 500;
             return null;
         }
-        return new ActiveDataProvider([
+        $response = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
             ]
         ]);
+        if (!$response->totalCount) {
+            Yii::$app->response->statusCode = 204;
+            return null;
+        }
+        return $response;
     }
 }
