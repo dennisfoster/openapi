@@ -139,8 +139,25 @@ class User extends \yii\db\ActiveRecord implements Linkable
 			'other' => function ($row) {
 				return (isset($row->phone))? $row->phone: '';
 			},
+            '_embedded' => function ($row) {
+                foreach ($row->subscription as $subscription) {
+                    $subscriptionMini[] = [
+                        'requestID' => $subscription->requestID,
+                        '_links' => [
+                            'Request' => Url::to(['request/view', 'id' => $subscription->requestID], true),
+                        ]
+                    ];
+                }
+                return [
+                    'Subscriptions' => $subscriptionMini
+            ];
+            },
         ];
     }
+
+    public function getSubscription() {
+		return $this->hasMany(RequestSubscription::className(), ['userID' => 'userID'])->onCondition(['_isDeleted' => 0]);
+	}
 
     public function getLinks() {
         return [

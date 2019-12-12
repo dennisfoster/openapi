@@ -31,6 +31,9 @@ return [
         /* Requests */
         'GET request/page/<page:\d+>' => 'request/index',
         'GET request' => 'request/index',
+        'POST request/<id:\d+>/subscribe/<user:\d+>' => 'subscription/create',
+        'POST request/<id:\d+>/unsubscribe/<user:\d+>' => 'subscription/delete',
+        'POST request/<id:\d+>/attachment' => 'attachment/create',
         'POST request' => 'site/placeholder',
         'GET request/search/page/<page:\d+>' => 'request/search',
         'GET request/search' => 'site/placeholder',
@@ -40,7 +43,6 @@ return [
         'GET request/document/<id:\d+>/download' => 'document/download',
         'GET request/<id:\d+>' => 'request/view',
         'PATCH request/<id:\d+>/<key>/<value>' => 'request/update',
-        'POST request/<id:\d+>/attachment' => 'attachment/create',
 
         /* Organizations */
         'GET organization/page/<page:\d+>' => 'organization/index',
@@ -61,6 +63,8 @@ return [
         'GET user/<id:\d+>' => 'user/view',
         'GET user/search/page/<page:\d+>' => 'user/search',
         'GET user/search' => 'user/search',
+        'POST user/<user:\d+>/subscribe/<id:\d+>' => 'subscription/create',
+        'POST user/<user:\d+>/unsubscribe/<id:\d+>' => 'subscription/delete',        
         'POST user' => 'user/create',
         'GET user/default' => 'site/placeholder',
         'DELETE user/<id:\d+>' => 'user/delete',
@@ -69,7 +73,7 @@ return [
         /* Patients */
         'GET patient/page/<page:\d+>' => 'patient/index',
         'GET patient' => 'patient/index',
-        'GET patient/search/page/<page:\d+>' => 'patient/search',        
+        'GET patient/search/page/<page:\d+>' => 'patient/search',
         'GET patient/search' => 'patient/search',
         'GET patient/<id:\d+>' => 'patient/view',
 

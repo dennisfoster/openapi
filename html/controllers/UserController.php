@@ -28,7 +28,7 @@ class UserController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         $response = new ActiveDataProvider([
             'query' => $query,
@@ -51,7 +51,7 @@ class UserController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         if (!$query->one()) {
             Yii::$app->response->statusCode = 204;
@@ -72,7 +72,7 @@ class UserController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}
@@ -84,12 +84,13 @@ class UserController extends BaseController {
                 $query = $query->andWhere(['organizationID' => $this->_organization]);
             }
             $model = $query->one();
-            $model->delete();
+            $model->organizationID = null;
+            $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
-        return null;
+        return ['message' => 'User removed from your organization'];
 	}
 
     public function actionCreate() {
@@ -116,7 +117,7 @@ class UserController extends BaseController {
             $model->save();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         Yii::$app->response->statusCode = 201;
         return $model;
@@ -139,7 +140,7 @@ class UserController extends BaseController {
             $query = User::findBySql($sql, [':search' => $search]);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-            return null;
+            return ['message' => 'Internal server error'];
         }
         $response = new ActiveDataProvider([
             'query' => $query,

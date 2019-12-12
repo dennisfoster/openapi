@@ -19,10 +19,10 @@ class HealthcheckController extends Controller {
 			$testPackage = Package::find()->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Healthcheck failed'];
 		}
 
         Yii::$app->response->statusCode = 200;
-        return null;
+        return ['message' => 'Healthcheck passed'];
 	}
 }

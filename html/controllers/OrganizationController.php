@@ -28,7 +28,7 @@ class OrganizationController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         $response = new ActiveDataProvider([
             'query' => $query,
@@ -51,11 +51,11 @@ class OrganizationController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         if (is_null($query->one())) {
             Yii::$app->response->statusCode = 204;
-        }        
+        }
         return $query->one();
 	}
 

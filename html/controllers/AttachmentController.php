@@ -30,7 +30,7 @@ class AttachmentController extends BaseController {
         }
         if ($query->count() == 0) {
             Yii::$app->response->statusCode = 400;
-			return null;
+			return ['message' => 'Wrong request ID'];
         }
 		try {
 			$file = UploadedFile::getInstanceByName('upload');
@@ -66,7 +66,7 @@ class AttachmentController extends BaseController {
 
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         Yii::$app->response->statusCode = 201;
         return $model;
@@ -81,7 +81,7 @@ class AttachmentController extends BaseController {
             $query = $query->andWhere(['requestAttachmentID' => $id]);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         if (is_null($query->one())) {
             Yii::$app->response->statusCode = 204;

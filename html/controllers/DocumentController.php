@@ -37,7 +37,7 @@ class DocumentController extends BaseController {
 			$tempFile = Yii::$app->amazon->getObject($documentName);
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
 
         header('Content-Type: application/pdf');
@@ -58,7 +58,7 @@ class DocumentController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         return $model;
 	}

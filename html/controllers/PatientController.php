@@ -28,7 +28,7 @@ class PatientController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         $response = new ActiveDataProvider([
             'query' => $query,
@@ -51,7 +51,7 @@ class PatientController extends BaseController {
             }
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-			return null;
+            return ['message' => 'Internal server error'];
 		}
         if (!$query->one()) {
             Yii::$app->response->statusCode = 204;
@@ -78,7 +78,7 @@ class PatientController extends BaseController {
             $query = Patient::findBySql($sql, [':search' => $search]);
         } catch (\Exception $ex) {
             Yii::$app->response->statusCode = 500;
-            return null;
+            return ['message' => 'Internal server error'];
         }
         $response = new ActiveDataProvider([
             'query' => $query,

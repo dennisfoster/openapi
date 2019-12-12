@@ -105,7 +105,7 @@ class Request extends \yii\db\ActiveRecord implements Linkable
 			},
             'isDownloaded',
             '_embedded' => function ($row) {
-                return [
+                $embedded = [
                     'Type' => $row->typeRequest,
                     'Status' => $row->status,
                     'Report' => $row->report,
@@ -127,7 +127,16 @@ class Request extends \yii\db\ActiveRecord implements Linkable
                     'Pharmaceuticals' => $row->pharmaceutical,
                     'Attachments' => $row->attachment,
                     'Documents' => $row->document,
-            ];
+                ];
+                foreach ($row->subscription as $subscription) {
+                    $embedded['Subscriptions'][] = [
+                        'userID' => $subscription->userID,
+                        '_links' => [
+                            'User' => Url::to(['user/view', 'id' => $subscription->userID], true),
+                        ]
+                    ];
+                }
+                return $embedded;
             },
         ];
     }
@@ -266,5 +275,10 @@ class Request extends \yii\db\ActiveRecord implements Linkable
     public function getDocument() {
 		return RequestDocument::getPublishedDocumentsByRequestGUID($this->requestGUID);
 	}
+
+    public function getSubscription() {
+		return $this->hasMany(RequestSubscription::className(), ['requestID' => 'requestID'])->onCondition(['_isDeleted' => 0]);
+	}
+
 
 }
