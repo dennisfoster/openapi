@@ -67,13 +67,13 @@ class RequestDocument extends \yii\db\ActiveRecord implements Linkable {
 		return $this->hasOne(RequestIntranet::className(), ['requestID' => 'requestID']);
 	}
 
+    public function getRequest() {
+		return Request::find()->where(['requestGUID' => $this->requestIntranet->requestGUID])->one();
+	}
+
 	public function getType() {
 		return $this->hasOne(TypeDocument::className(), ['typeDocumentID' => 'typeDocumentID']);
 	}
-
-    public function getRequest() {
-        return $this->hasOne(Request::className(), ['requestGUID' => 'requestGUID'])->alias('access')->via('requestIntranet');
-    }
 
 	public static function getPublishedDocumentsByRequestGUID($requestGUID) {
 		$query = self::find()

@@ -22,12 +22,13 @@ class DocumentController extends BaseController {
     ];
 
     public function actionDownload($id) {
-		try {
-            $query = RequestDocument::find()->where(['reportID' => $id]);
-            if ($this->_scope != self::SCOPE_ADMIN) {
-                $query = $query->joinWith('request')->where(['organizationID' => $this->_organization]);
+        try {
+            $model = RequestDocument::find()->joinWith('requestIntranet')->where(['reportID' => $id])->one();
+            if ($this->_scope != self::SCOPE_ADMIN && $model->request->organizationID != $this->_organization) {
+                Yii::$app->response->statusCode = 400;
+    			return null;
             }
-            $document = (object) $query->one()->toArray();
+            $document = (object) $model->toArray();
 			if (empty($document->name)) {
 				$document->name = 'AccuMed_Attachment_' . date('Ymd_Hia');
 			}
@@ -50,15 +51,15 @@ class DocumentController extends BaseController {
 
     public function actionView($id) {
 		try {
-            $query = RequestDocument::find()->where(['reportID' => $id]);
-            if ($this->_scope != self::SCOPE_ADMIN) {
-                $query = $query->joinWith('request')->where(['access.organizationID' => $this->_organization]);
+            $model = RequestDocument::find()->joinWith('requestIntranet')->where(['reportID' => $id])->one();
+            if ($this->_scope != self::SCOPE_ADMIN and $model->request->organizationID != $this->_organization) {
+                Yii::$app->response->statusCode = 400;
+    			return null;
             }
-			$response = $query->one();
 		} catch (\Exception $ex) {
             Yii::$app->response->statusCode = 400;
 			return null;
 		}
-        return $response;
+        return $model;
 	}
 }
