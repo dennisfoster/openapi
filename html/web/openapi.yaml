@@ -354,6 +354,72 @@ paths:
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No requests found
+  /request/{id}/subscribe/{userid}:
+    post:
+      tags:
+      - Request
+      summary: Subscribe user to request
+      operationId: subscribe
+      parameters:
+      - name: id
+        in: path
+        description: request ID
+        required: true
+      - name: userid
+        in: path
+        description: user ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSubscription'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription already exists
+  /request/{id}/unsubscribe/{userid}:
+    post:
+      tags:
+      - Request
+      summary: Unsubscribe user from request
+      operationId: unubscribe
+      parameters:
+      - name: id
+        in: path
+        description: request ID
+        required: true
+      - name: userid
+        in: path
+        description: user ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subscription cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription cancelled
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription not found
   # /request/default:
   #   get:
   #     tags:
@@ -864,6 +930,72 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/User'
                   - $ref: '#/components/schemas/Link'
+  /user/{id}/subscribe/{requestid}:
+    post:
+      tags:
+      - User
+      summary: Subscribe user to request
+      operationId: subscribe
+      parameters:
+      - name: id
+        in: path
+        description: user ID
+        required: true
+      - name: requestid
+        in: path
+        description: request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSubscription'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription already exists
+  /user/{id}/unsubscribe/{requestid}:
+    post:
+      tags:
+      - User
+      summary: Unsubscribe user from request
+      operationId: unubscribe
+      parameters:
+      - name: id
+        in: path
+        description: user ID
+        required: true
+      - name: userid
+        in: path
+        description: request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subscription cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription cancelled
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+              example:
+                  message: Subscription not found
   /patient:
     get:
       tags:
@@ -1503,7 +1635,31 @@ components:
           example: 1
         perPage:
           type: integer
-          example: 10                    
+          example: 10
+    RequestSubscription:
+      type: object
+      properties:
+        requestID:
+          type: integer
+          example: 2318
+        userID:
+          type: integer
+          example: 1104
+        _links:
+          type: object
+          properties:
+            Request:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: http://openapi.accumedintel.com/request/2318
+            User:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: http://openapi.accumedintel.com/user/1104
     ResponseMessage:
       type: object
       properties:
