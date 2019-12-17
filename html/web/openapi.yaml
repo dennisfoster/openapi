@@ -359,12 +359,14 @@ paths:
       tags:
       - Request
       summary: Subscribe user to request
-      operationId: subscribe
+      operationId: subscribeRequest
       parameters:
       - name: id
         in: path
         description: request ID
         required: true
+        schema:
+          type: string        
       - name: userid
         in: path
         description: user ID
@@ -391,12 +393,14 @@ paths:
       tags:
       - Request
       summary: Unsubscribe user from request
-      operationId: unubscribe
+      operationId: unubscribeRequest
       parameters:
       - name: id
         in: path
         description: request ID
         required: true
+        schema:
+          type: string        
       - name: userid
         in: path
         description: user ID
@@ -496,6 +500,13 @@ paths:
       - Request
       summary: Upload new request attachment
       operationId: createRequestAttachment
+      parameters:
+      - name: id
+        in: path
+        description: request attachment ID
+        required: true
+        schema:
+          type: string      
       requestBody:
         content:
           application/json:
@@ -935,12 +946,14 @@ paths:
       tags:
       - User
       summary: Subscribe user to request
-      operationId: subscribe
+      operationId: subscribeUser
       parameters:
       - name: id
         in: path
         description: user ID
         required: true
+        schema:
+          type: string        
       - name: requestid
         in: path
         description: request ID
@@ -967,13 +980,15 @@ paths:
       tags:
       - User
       summary: Unsubscribe user from request
-      operationId: unubscribe
+      operationId: unubscribeUser
       parameters:
       - name: id
         in: path
         description: user ID
         required: true
-      - name: userid
+        schema:
+          type: string        
+      - name: requestid
         in: path
         description: request ID
         required: true
