@@ -9,14 +9,14 @@
 return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
-    'enableStrictParsing' => true,    
+    'enableStrictParsing' => true,
     'rules' => [
         '/' => 'site/index',
-        'v1/' => 'site/index',
+        'v1' => 'site/index',
 
 
         /* Healthcheck route */
-        'GET healthcheck:\w+>' => 'healthcheck/index',
+        'GET healthcheck' => 'healthcheck/index',
 
         /* Packages */
         'GET v1/package/page/<page:\d+>' => 'package/index',
@@ -70,7 +70,7 @@ return [
         'POST v1/user/<user:\d+>/unsubscribe/<id:\d+>' => 'subscription/delete',
         'POST v1/user' => 'user/create',
         'GET v1/user/default' => 'site/placeholder',
-        'DELETE user/<id:\d+>' => 'user/delete',
+        'DELETE v1/user/<id:\d+>' => 'user/delete',
         'PATCH v1/user/<id:\d+>/<key>/<value>' => 'user/update',
 
         /* Patients */
