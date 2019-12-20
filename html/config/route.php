@@ -9,6 +9,7 @@
 return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
+    'enableStrictParsing' => true,    
     'rules' => [
         '/' => 'site/index',
         'v1/' => 'site/index',
