@@ -11,7 +11,7 @@ tags:
   - name: User
   - name: Patient
 paths:
-  v1/package:
+  /v1/package:
     get:
       tags:
       - Package
@@ -29,7 +29,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/package'
+                        - $ref: '#/components/schemas/package'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -72,9 +72,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/package'
+                  - $ref: '#/components/schemas/package'
                   - $ref: '#/components/schemas/Link'
-  # v1/package/default:
+  # /v1/package/default:
   #   get:
   #     tags:
   #     - Package
@@ -86,8 +86,8 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/components/schemasv1/package'
-  v1/package/search:
+  #               $ref: '#/components/schemas/package'
+  /v1/package/search:
     get:
       tags:
       - Package
@@ -112,7 +112,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/package'
+                        - $ref: '#/components/schemas/package'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -120,7 +120,7 @@ paths:
                     $ref: '#/components/schemas/Meta'
         '204':
           description: No packages found
-  v1/package/{id}:
+  /v1/package/{id}:
     get:
       tags:
       - Package
@@ -140,7 +140,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/package'
+                  - $ref: '#/components/schemas/package'
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No packages found
@@ -165,7 +165,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Package deleted
-  v1/package/{id}/{key}/{value}:
+  /v1/package/{id}/{key}/{value}:
     patch:
       tags:
       - Package
@@ -197,9 +197,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/package'
+                  - $ref: '#/components/schemas/package'
                   - $ref: '#/components/schemas/Link'
-  v1/request:
+  /v1/request:
     get:
       tags:
       - Request
@@ -217,7 +217,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/request'
+                        - $ref: '#/components/schemas/request'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -256,9 +256,9 @@ paths:
                     Report:
                       $ref: '#/components/schemas/Report'
                     Organization:
-                      $ref: '#/components/schemasv1/organization'
+                      $ref: '#/components/schemas/organization'
                     User:
-                      $ref: '#/components/schemasv1/user'
+                      $ref: '#/components/schemas/user'
                     Claim:
                       $ref: '#/components/schemas/Claim'
                     Attorney:
@@ -266,11 +266,11 @@ paths:
                     Contact:
                       $ref: '#/components/schemas/Contact'
                     Patient:
-                      $ref: '#/components/schemasv1/patient'
+                      $ref: '#/components/schemas/patient'
                     Packages:
                       type: array
                       items:
-                        $ref: '#/components/schemasv1/requestPackage'
+                        $ref: '#/components/schemas/requestPackage'
                     Bills:
                       type: array
                       items:
@@ -295,9 +295,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/request'
+                  - $ref: '#/components/schemas/request'
                   - $ref: '#/components/schemas/Link'
-  v1/request/search:
+  /v1/request/search:
     get:
       tags:
       - Request
@@ -322,7 +322,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/request'
+                        - $ref: '#/components/schemas/request'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -330,7 +330,7 @@ paths:
                     $ref: '#/components/schemas/Meta'
         '204':
           description: No requests found
-  v1/request/{id}:
+  /v1/request/{id}:
     get:
       tags:
       - Request
@@ -350,11 +350,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/request'
+                  - $ref: '#/components/schemas/request'
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No requests found
-  v1/request/{id}/subscribe/{userid}:
+  /v1/request/{id}/subscribe/{userid}:
     post:
       tags:
       - Request
@@ -379,7 +379,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemasv1/requestSubscription'
+                $ref: '#/components/schemas/requestSubscription'
         '400':
           description: Bad request
           content:
@@ -388,7 +388,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Subscription already exists
-  v1/request/{id}/unsubscribe/{userid}:
+  /v1/request/{id}/unsubscribe/{userid}:
     post:
       tags:
       - Request
@@ -424,7 +424,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Subscription not found
-  # v1/request/default:
+  # /v1/request/default:
   #   get:
   #     tags:
   #     - Request
@@ -436,8 +436,8 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/components/schemasv1/request'
-  # v1/request/{id}/{key}/{value}:
+  #               $ref: '#/components/schemas/request'
+  # /v1/request/{id}/{key}/{value}:
   #   patch:
   #     tags:
   #     - Request
@@ -469,9 +469,9 @@ paths:
   #           application/json:
   #             schema:
   #               allOf:
-  #                 - $ref: '#/components/schemasv1/request'
+  #                 - $ref: '#/components/schemas/request'
   #                 - $ref: '#/components/schemas/Link'
-  v1/request/attachment/{id}:
+  /v1/request/attachment/{id}:
     get:
       tags:
       - Request
@@ -526,7 +526,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Attachment'
                   - $ref: '#/components/schemas/Link'
-  v1/request/document/{id}:
+  /v1/request/document/{id}:
     get:
       tags:
       - Request
@@ -550,7 +550,7 @@ paths:
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No documents found
-  v1/request/document/{id}/download:
+  /v1/request/document/{id}/download:
     get:
       tags:
       - Request
@@ -573,7 +573,7 @@ paths:
                 format: binary
         '204':
           description: No documents found
-  v1/organization:
+  /v1/organization:
     get:
       tags:
       - Organization
@@ -591,7 +591,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/organization'
+                        - $ref: '#/components/schemas/organization'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -628,9 +628,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/organization'
+                  - $ref: '#/components/schemas/organization'
                   - $ref: '#/components/schemas/Link'
-  # v1/organization/default:
+  # /v1/organization/default:
   #   get:
   #     tags:
   #     - Organization
@@ -642,8 +642,8 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/components/schemasv1/organization'
-  v1/organization/search:
+  #               $ref: '#/components/schemas/organization'
+  /v1/organization/search:
     get:
       tags:
       - Organization
@@ -668,7 +668,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/organization'
+                        - $ref: '#/components/schemas/organization'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -676,7 +676,7 @@ paths:
                     $ref: '#/components/schemas/Meta'
         '204':
           description: No organizations found
-  v1/organization/{id}:
+  /v1/organization/{id}:
     get:
       tags:
       - Organization
@@ -696,7 +696,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/organization'
+                  - $ref: '#/components/schemas/organization'
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No organizations found
@@ -721,7 +721,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Organization deleted
-  v1/organization/{id}/{key}/{value}:
+  /v1/organization/{id}/{key}/{value}:
     patch:
       tags:
       - Organization
@@ -753,9 +753,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/organization'
+                  - $ref: '#/components/schemas/organization'
                   - $ref: '#/components/schemas/Link'
-  v1/user:
+  /v1/user:
     get:
       tags:
       - User
@@ -773,7 +773,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/user'
+                        - $ref: '#/components/schemas/user'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -814,9 +814,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/user'
+                  - $ref: '#/components/schemas/user'
                   - $ref: '#/components/schemas/Link'
-  # v1/user/default:
+  # /v1/user/default:
   #   get:
   #     tags:
   #     - User
@@ -828,8 +828,8 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/components/schemasv1/user'
-  v1/user/search:
+  #               $ref: '#/components/schemas/user'
+  /v1/user/search:
     get:
       tags:
       - User
@@ -854,7 +854,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/user'
+                        - $ref: '#/components/schemas/user'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -862,7 +862,7 @@ paths:
                     $ref: '#/components/schemas/Meta'
         '204':
           description: No users found
-  v1/user/{id}:
+  /v1/user/{id}:
     get:
       tags:
       - User
@@ -882,7 +882,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/user'
+                  - $ref: '#/components/schemas/user'
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No users found
@@ -907,7 +907,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: User removed from your organization
-  v1/user/{id}/{key}/{value}:
+  /v1/user/{id}/{key}/{value}:
     patch:
       tags:
       - User
@@ -939,9 +939,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/user'
+                  - $ref: '#/components/schemas/user'
                   - $ref: '#/components/schemas/Link'
-  v1/user/{id}/subscribe/{requestid}:
+  /v1/user/{id}/subscribe/{requestid}:
     post:
       tags:
       - User
@@ -966,7 +966,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemasv1/requestSubscription'
+                $ref: '#/components/schemas/requestSubscription'
         '400':
           description: Bad request
           content:
@@ -975,7 +975,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Subscription already exists
-  v1/user/{id}/unsubscribe/{requestid}:
+  /v1/user/{id}/unsubscribe/{requestid}:
     post:
       tags:
       - User
@@ -1011,7 +1011,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Subscription not found
-  v1/patient:
+  /v1/patient:
     get:
       tags:
       - Patient
@@ -1029,7 +1029,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/patient'
+                        - $ref: '#/components/schemas/patient'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -1078,9 +1078,9 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/patient'
+                  - $ref: '#/components/schemas/patient'
                   - $ref: '#/components/schemas/Link'
-  # v1/patient/default:
+  # /v1/patient/default:
   #   get:
   #     tags:
   #     - Patient
@@ -1092,8 +1092,8 @@ paths:
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: '#/components/schemasv1/patient'
-  v1/patient/search:
+  #               $ref: '#/components/schemas/patient'
+  /v1/patient/search:
     get:
       tags:
       - Patient
@@ -1118,7 +1118,7 @@ paths:
                     type: array
                     items:
                       allOf:
-                        - $ref: '#/components/schemasv1/patient'
+                        - $ref: '#/components/schemas/patient'
                         - $ref: '#/components/schemas/Link'
                   _links:
                     $ref: '#/components/schemas/PageLink'
@@ -1126,7 +1126,7 @@ paths:
                     $ref: '#/components/schemas/Meta'
         '204':
           description: No patients found
-  v1/patient/{id}:
+  /v1/patient/{id}:
     get:
       tags:
       - Patient
@@ -1146,7 +1146,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/patient'
+                  - $ref: '#/components/schemas/patient'
                   - $ref: '#/components/schemas/Link'
         '204':
           description: No patients found
@@ -1171,7 +1171,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMessage'
               example:
                   message: Patient deleted
-  v1/patient/{id}/{key}/{value}:
+  /v1/patient/{id}/{key}/{value}:
     patch:
       tags:
       - Patient
@@ -1203,7 +1203,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemasv1/patient'
+                  - $ref: '#/components/schemas/patient'
                   - $ref: '#/components/schemas/Link'
 components:
   schemas:
@@ -1298,11 +1298,11 @@ components:
               $ref: '#/components/schemas/Report'
             Organization:
               allOf:
-                - $ref: '#/components/schemasv1/organization'
+                - $ref: '#/components/schemas/organization'
                 - $ref: '#/components/schemas/Link'
             User:
               allOf:
-                - $ref: '#/components/schemasv1/user'
+                - $ref: '#/components/schemas/user'
                 - $ref: '#/components/schemas/Link'
             Claim:
               $ref: '#/components/schemas/Claim'
@@ -1312,12 +1312,12 @@ components:
               $ref: '#/components/schemas/Contact'
             Patient:
               allOf:
-                - $ref: '#/components/schemasv1/patient'
+                - $ref: '#/components/schemas/patient'
                 - $ref: '#/components/schemas/Link'
             Packages:
               type: array
               items:
-                $ref: '#/components/schemasv1/requestPackage'
+                $ref: '#/components/schemas/requestPackage'
             Bills:
               type: array
               items:
@@ -1668,13 +1668,13 @@ components:
               properties:
                 href:
                   type: string
-                  example: http://openapi.accumedintel.comv1/request/2318
+                  example: http://openapi.accumedintel.com/v1/request/2318
             User:
               type: object
               properties:
                 href:
                   type: string
-                  example: http://openapi.accumedintel.comv1/user/1104
+                  example: http://openapi.accumedintel.com/v1/user/1104
     ResponseMessage:
       type: object
       properties:
