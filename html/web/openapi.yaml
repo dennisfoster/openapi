@@ -379,7 +379,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/requestSubscription'
+                $ref: '#/components/schemas/RequestSubscription'
         '400':
           description: Bad request
           content:
@@ -966,7 +966,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/requestSubscription'
+                $ref: '#/components/schemas/RequestSubscription'
         '400':
           description: Bad request
           content:
