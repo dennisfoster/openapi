@@ -58,7 +58,7 @@ return [
         'GET v1/organization/search/page/<page:\d+>' => 'organization/search',
         'GET v1/organization/search' => 'organizationadmin/search',
         'PATCH v1/organization/<id:\d+>/<key>/<value>' => 'organizationadmin/update',
-        'DELETE organization/<id>' => 'organizationadmin/delete',
+        'DELETE v1/organization/<id>' => 'organizationadmin/delete',
 
         /* Users */
         'GET v1/user/page/<page:\d+>' => 'user/index',
